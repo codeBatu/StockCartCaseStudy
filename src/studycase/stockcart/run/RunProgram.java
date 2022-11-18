@@ -1,4 +1,4 @@
-package studycase.run;
+package studycase.stockcart.run;
 
 import studycase.stockcart.controller.StockCardController;
 import studycase.stockcart.model.CrudModel;
