@@ -50,7 +50,9 @@ public class StockCartUi extends JFrame {
 	private JTextArea description_textArea;
 	private JFormattedTextField crated_date_formattedTextField ;
 	private   StockCardController stockCardController ;
-
+	private JComboBox sunit_comboBox ;
+	private JComboBox kdv_type_comboBox ;
+private	JComboBox stock_type_comboBox ;
 	Connection con ;
 	PreparedStatement pst;
 	ResultSet rs;
@@ -71,6 +73,21 @@ private void Clear() {
 	description_textArea.setText("");
 	//crated_date_formattedTextField.setText("");
 }
+private StockCardModel fill() { 
+	StockCardModel stockCardModel = new StockCardModel();
+
+stockCardModel.setStockCod(stock_code_textField.getText());
+stockCardModel.setStockName(stock_name_textField.getText());
+stockCardModel.setStockType((int)stock_type_comboBox.getSelectedItem());	
+stockCardModel.setUnit(sunit_comboBox.getSelectedItem().toString());
+stockCardModel.setBarcode(barcode_textField.getText());
+stockCardModel.setKdvType((double)kdv_type_comboBox.getSelectedItem());
+stockCardModel.setDescription(description_textArea.getText());
+stockCardModel.setCratedDate(crated_date_formattedTextField.getText());
+return stockCardModel;
+}
+
+
 
 
  private void init() { 
@@ -109,7 +126,7 @@ private void Clear() {
 		stock_type_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(stock_type_lbl);
 		
-		JComboBox stock_type_comboBox = new JComboBox();
+	 stock_type_comboBox = new JComboBox();
 		stock_type_comboBox.setBounds(147, 106, 114, 22);
 		stock_type_comboBox.addItem(1);
 		stock_type_comboBox.addItem(2);
@@ -121,7 +138,7 @@ private void Clear() {
 		unit_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(unit_lbl);
 		
-		JComboBox sunit_comboBox = new JComboBox();
+	sunit_comboBox = new JComboBox();
 		sunit_comboBox.setBounds(147, 141, 114, 22);
 		sunit_comboBox.addItem("metre");
 		sunit_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -153,7 +170,7 @@ private void Clear() {
 		created_date_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(created_date_lbl);
 		
-		JComboBox kdv_type_comboBox = new JComboBox();
+	 kdv_type_comboBox = new JComboBox();
 		kdv_type_comboBox.setBounds(147, 212, 114, 22);
 		kdv_type_comboBox.addItem(.08d);
 		kdv_type_comboBox.addItem(.18d);
@@ -194,19 +211,10 @@ private void Clear() {
 		update_btnNewButton.setBounds(479, 90, 190, 23);
 		update_btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StockCardModel stockCardModel = new StockCardModel();
-				
-				stockCardModel.setStockCod(stock_code_textField.getText());
-				stockCardModel.setStockName(stock_name_textField.getText());
-				stockCardModel.setStockType((int)stock_type_comboBox.getSelectedItem());	
-				stockCardModel.setUnit(sunit_comboBox.getSelectedItem().toString());
-				stockCardModel.setBarcode(barcode_textField.getText());
-				stockCardModel.setKdvType((double)kdv_type_comboBox.getSelectedItem());
-				stockCardModel.setDescription(description_textArea.getText());
-				stockCardModel.setCratedDate(crated_date_formattedTextField.getText());
+
 				
 				
-				stockCardController.updateDb(stockCardModel	);
+				stockCardController.updateDb(fill()	);
 				
 					stockCardController.LoadData(table);
 					
@@ -258,15 +266,7 @@ private void Clear() {
 		save_btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				crated_date_formattedTextField.setValue(new Date());
-				stockCardController.createDb(stock_code_textField.getText(),
-						stock_name_textField.getText(),
-						(int)stock_type_comboBox.getSelectedItem(),
-						sunit_comboBox.getSelectedItem().toString(),
-						barcode_textField.getText(),
-						(double)kdv_type_comboBox.getSelectedItem(),
-						description_textArea.getText(),
-						crated_date_formattedTextField.getText()
-						);
+				stockCardController.createDb(fill()	);
 					Clear();
 					stockCardController.LoadData(table);
 					
@@ -281,18 +281,20 @@ private void Clear() {
 		JButton copy_btnNewButton = new JButton("Kopyala");
 		copy_btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				StockCardModel stockCardModel = new StockCardModel();
+
+				stockCardModel.setStockCod(stock_code_textField.getText()+"(2)");
+				stockCardModel.setStockName(stock_name_textField.getText());
+				stockCardModel.setStockType((int)stock_type_comboBox.getSelectedItem());	
+				stockCardModel.setUnit(sunit_comboBox.getSelectedItem().toString());
+				stockCardModel.setBarcode(barcode_textField.getText());
+				stockCardModel.setKdvType((double)kdv_type_comboBox.getSelectedItem());
+				stockCardModel.setDescription(description_textArea.getText());
+				stockCardModel.setCratedDate(crated_date_formattedTextField.getText());
 				
 				
-				
-				stockCardController.createDb(stock_code_textField.getText()+("(2)"),
-						stock_name_textField.getText(),
-						(int)stock_type_comboBox.getSelectedItem(),
-						sunit_comboBox.getSelectedItem().toString(),
-						barcode_textField.getText(),
-						(double)kdv_type_comboBox.getSelectedItem(),
-						description_textArea.getText(),
-						crated_date_formattedTextField.getText()
-						);
+				stockCardController.createDb(stockCardModel);
+					
 			
 					stockCardController.LoadData(table);
 				//table.getTransferHandler().exportToClipboard(table, getToolkit().getSystemClipboard(), TransferHandler.COPY);

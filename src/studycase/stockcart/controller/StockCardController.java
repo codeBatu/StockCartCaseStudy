@@ -28,7 +28,7 @@ public class StockCardController {
 			if (stockCardModel.getStockCod().length() >= 50 || stockCardModel.getStockName().length() >= 100 || stockCardModel.getBarcode().length() >= 30) {
 				JOptionPane.showMessageDialog(null, "Data is long");
 				return;
-
+ 
 			}
 
 			this.crudModel.updateDb(stockCardModel);
@@ -41,19 +41,19 @@ public class StockCardController {
 		this.crudModel.LoadData(table);
 	}
 
-	public void createDb(String stockCod, String stockName, int stockType, String unit, String barcode, Double kdvType,
-			String description, String cratedDate) {
+	public void createDb( StockCardModel stockCardModel) {
 
-		if (stockCod.equals("") || stockName.equals("") || barcode.equals("") || description.equals("")
-				|| cratedDate.equals("")) {
+		if (stockCardModel.getStockCod().equals("") ||stockCardModel.getStockName().equals("") || stockCardModel.getBarcode().equals("") || stockCardModel.getDescription().equals("")
+				|| stockCardModel.getCratedDate().equals("")) {
 			JOptionPane.showMessageDialog(null, "Field is not null");
 		} else {
-			if (stockCod.length() >= 50 || stockName.length() >= 100 || barcode.length() >= 30) {
+			if (stockCardModel.getStockCod().length() >= 50 || stockCardModel.getStockName().length() >= 100 || stockCardModel.getBarcode().length() >= 30) {
 				JOptionPane.showMessageDialog(null, "Data is long");
 				return;
-
+ 
 			}
-			this.crudModel.createDb(stockCod, stockName, stockType, unit, barcode, kdvType, description, cratedDate);
+
+			this.crudModel.createDb(stockCardModel);
 
 		}
 	}

@@ -85,24 +85,18 @@ public void LoadData(JTable table) {
 		
 
 }
-	public void createDb(String stockCod , 
-			String stockName,
-			int stockType,
-			String unit, 
-			String barcode, Double kdvType, 
-			String description ,
-			String cratedDate ) {
+	public void createDb(StockCardModel sotckCardModel ) {
 		try {
 				pst = con.prepareStatement(Constant.CREATE_STOCK_CARD_TABLE_SQL_QUERY);
-
-				pst.setString(1,stockCod);
-				pst.setString(2,stockName);
-				pst.setInt(3,stockType);
-				pst.setString(4,unit);
-				pst.setString(5,barcode);
-				pst.setDouble(6,kdvType);
-				pst.setString(7,description);
-				pst.setString(8,cratedDate);
+				pst.setString(1,sotckCardModel.getStockCod());
+				pst.setString(2,sotckCardModel.getStockName());
+				pst.setInt(3,sotckCardModel.getStockType());
+				pst.setString(4,sotckCardModel.getUnit());
+				pst.setString(5,sotckCardModel.getBarcode());
+				pst.setDouble(6,sotckCardModel.getKdvType());
+				pst.setString(7,sotckCardModel.getDescription());
+				pst.setString(8,sotckCardModel.getCratedDate());
+				
 			
 			pst.executeUpdate();
 		
