@@ -10,9 +10,6 @@ public class RunProgram {
 	       StockCardController stockCardController = new StockCardController(cruModel);
 		    StockCartUi stockCardUi = new StockCartUi(stockCardController);
 		    stockCardUi.setVisible(true);
-	
-	   
-
 	    }
 
 }

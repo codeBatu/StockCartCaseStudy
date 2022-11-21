@@ -35,6 +35,7 @@ import javax.swing.table.TableModel;
 import studycase.stockcart.controller.StockCardController;
 import studycase.stockcart.model.CrudModel;
 import studycase.stockcart.model.DbUtils;
+import studycase.stockcart.model.StockCardModel;
 import studycase.stockcart.util.Constant;
 
 
@@ -193,15 +194,19 @@ private void Clear() {
 		update_btnNewButton.setBounds(479, 90, 190, 23);
 		update_btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				stockCardController.updateDb(stock_code_textField.getText(),
-						stock_name_textField.getText(),
-						(int)stock_type_comboBox.getSelectedItem(),
-						sunit_comboBox.getSelectedItem().toString(),
-						barcode_textField.getText(),
-						(double)kdv_type_comboBox.getSelectedItem(),
-						description_textArea.getText(),
-						crated_date_formattedTextField.getText()
-						);
+				StockCardModel stockCardModel = new StockCardModel();
+				
+				stockCardModel.setStockCod(stock_code_textField.getText());
+				stockCardModel.setStockName(stock_name_textField.getText());
+				stockCardModel.setStockType((int)stock_type_comboBox.getSelectedItem());	
+				stockCardModel.setUnit(sunit_comboBox.getSelectedItem().toString());
+				stockCardModel.setBarcode(barcode_textField.getText());
+				stockCardModel.setKdvType((double)kdv_type_comboBox.getSelectedItem());
+				stockCardModel.setDescription(description_textArea.getText());
+				stockCardModel.setCratedDate(crated_date_formattedTextField.getText());
+				
+				
+				stockCardController.updateDb(stockCardModel	);
 				
 					stockCardController.LoadData(table);
 					

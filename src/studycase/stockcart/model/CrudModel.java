@@ -60,29 +60,21 @@ public void LoadData(JTable table) {
 	}
 
 
-	public void updateDb(
-			String stockCod , 
-			String stockName,
-			int stockType,
-			String unit, 
-			String barcode, Double kdvType, 
-			String description ,
-			String cratedDate ) {
+	public void updateDb(StockCardModel sotckCardModel) {
 		try {
 				pst = con.prepareStatement(Constant.UPDATE_STOCK_CARD_TABLE_BY_STOCKCARDNO_SQL_QUERY);
 
-				pst.setString(8,stockCod);
-				pst.setString(1,stockName);
-				pst.setInt(2,stockType);
-				pst.setString(3,unit);
-				pst.setString(4,barcode);
-				pst.setDouble(5,kdvType);
-				pst.setString(6,description);
-				pst.setString(7,cratedDate);
+				pst.setString(8,sotckCardModel.getStockCod());
+				pst.setString(1,sotckCardModel.getStockName());
+				pst.setInt(2,sotckCardModel.getStockType());
+				pst.setString(3,sotckCardModel.getUnit());
+				pst.setString(4,sotckCardModel.getBarcode());
+				pst.setDouble(5,sotckCardModel.getKdvType());
+				pst.setString(6,sotckCardModel.getDescription());
+				pst.setString(7,sotckCardModel.getCratedDate());
 			
 			pst.executeUpdate();
-		stockCod = "";
-		stockName = "";
+		
 		
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
