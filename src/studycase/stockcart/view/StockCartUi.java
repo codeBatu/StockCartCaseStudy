@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -50,9 +51,15 @@ public class StockCartUi extends JFrame {
 	private JTextArea description_textArea;
 	private JFormattedTextField crated_date_formattedTextField ;
 	private   StockCardController stockCardController ;
-	private JComboBox sunit_comboBox ;
-	private JComboBox kdv_type_comboBox ;
-private	JComboBox stock_type_comboBox ;
+
+
+	  DefaultComboBoxModel<Double> kdvTypeModel = new DefaultComboBoxModel<>(Constant.KDV_TYPE_LIST);
+	    DefaultComboBoxModel<Integer> stockTypeModel = new DefaultComboBoxModel<>(Constant.STOCK_TYPE_LIST);
+	    DefaultComboBoxModel<String> unitTypeModel = new DefaultComboBoxModel<>(Constant.UNIT_TYPE_LIST);
+	private  JComboBox<Double>  kdv_type_comboBox = new JComboBox<>(kdvTypeModel); ;
+	private  JComboBox<Integer>  stock_type_comboBox  = new JComboBox<>(stockTypeModel); ; ;
+
+private  JComboBox<String>  sunit_comboBox  = new JComboBox<>(unitTypeModel); ; ;
 	Connection con ;
 	PreparedStatement pst;
 	ResultSet rs;
@@ -125,11 +132,9 @@ return stockCardModel;
 		stock_type_lbl.setBounds(10, 105, 78, 25);
 		stock_type_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(stock_type_lbl);
-		
-	 stock_type_comboBox = new JComboBox();
+
 		stock_type_comboBox.setBounds(147, 106, 114, 22);
-		stock_type_comboBox.addItem(1);
-		stock_type_comboBox.addItem(2);
+	
 		stock_type_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(stock_type_comboBox);
 		
@@ -138,9 +143,9 @@ return stockCardModel;
 		unit_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(unit_lbl);
 		
-	sunit_comboBox = new JComboBox();
+
 		sunit_comboBox.setBounds(147, 141, 114, 22);
-		sunit_comboBox.addItem("metre");
+	
 		sunit_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(sunit_comboBox);
 		
@@ -170,10 +175,10 @@ return stockCardModel;
 		created_date_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(created_date_lbl);
 		
-	 kdv_type_comboBox = new JComboBox();
+	// kdv_type_comboBox = new JComboBox();
 		kdv_type_comboBox.setBounds(147, 212, 114, 22);
-		kdv_type_comboBox.addItem(.08d);
-		kdv_type_comboBox.addItem(.18d);
+	//	kdv_type_comboBox.addItem(.08d);
+	//	kdv_type_comboBox.addItem(.18d);
 		kdv_type_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(kdv_type_comboBox);
 		
@@ -251,11 +256,14 @@ return stockCardModel;
 				TableModel tt = table.getModel();
 				stock_code_textField.setText(tt.getValueAt(selectedRow, 0).toString());
 				stock_name_textField.setText(tt.getValueAt(selectedRow, 1).toString());
-				stock_type_comboBox.setSelectedItem(tt.getValueAt(selectedRow, 2).toString());
+				
+				stock_type_comboBox.setSelectedItem(tt.getValueAt(selectedRow, 2));
 				sunit_comboBox.setSelectedItem(tt.getValueAt(selectedRow, 3).toString());
 				barcode_textField.setText(tt.getValueAt(selectedRow, 4).toString());
 				description_textArea.setText(tt.getValueAt(selectedRow, 6).toString());
-				kdv_type_comboBox.setSelectedItem(tt.getValueAt(selectedRow, 6).toString());
+		//		kdv_type_comboBox.setSelectedItem();
+				kdv_type_comboBox.setSelectedItem(tt.getValueAt(selectedRow, 5));
+	//		kdv_type_comboBox.setSelectedItem(tt.getValueAt(selectedRow, 5).toString());
 				crated_date_formattedTextField.setText(tt.getValueAt(selectedRow, 7).toString());		
 			}		
 		});

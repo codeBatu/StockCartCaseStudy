@@ -27,4 +27,13 @@ public static String CREATE_STOCK_CARD_TABLE_SQL_QUERY = "insert into stock_card
 		+ "Description,"
 		+ "CreatedDate)"
 		+ "values (?,?,?,?,?,?,?,?)"
-	;}
+	;
+
+
+public static String [] UNIT_TYPE_LIST= {"metre","santimetre" } ;
+
+public static Integer []STOCK_TYPE_LIST= {1,2 } ;
+public static Double []KDV_TYPE_LIST= {.8D,.18D} ;
+}
+
+
