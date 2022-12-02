@@ -6,15 +6,16 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import studycase.stockcart.model.CrudModel;
+import studycase.stockcart.model.StockCardRepository;
 import studycase.stockcart.model.DbUtils;
-import studycase.stockcart.model.StockCardModel;
+import studycase.stockcart.model.entity.StockCardModel;
+import studycase.stockcart.model.entity.StockTypeCardModel;
 import studycase.stockcart.util.Constant;
 
 public class StockCardController {
-	private static CrudModel crudModel;
+	private static StockCardRepository crudModel;
 
-	public StockCardController(CrudModel crudModel) {
+	public StockCardController(StockCardRepository crudModel) {
 
 		this.crudModel = crudModel;
 	}
@@ -97,6 +98,77 @@ public class StockCardController {
 	public Connection Connect() {
 
 		return this.crudModel.Connect();
+
+	}
+	public ResultSet getStockTypeByKdvTypeId() {
+		
+		return this.crudModel.getStockTypeByKdvTypeId();
+	}
+	public ResultSet getKdvTypeTable() {
+		
+		return this.crudModel.getKdvTypeTable();
+	}
+	public ResultSet getFirstItemFromStockCard() {
+
+		// var list = this.stockTypeCardRepository.getFirstItemFromStockTypeTable();
+
+		return this.crudModel.getFirstItemFromStockTable();
+
+	}
+
+	public ResultSet getAfterItemFromStockCard(StockCardModel stockCardModel) {
+
+		// var list = this.stockTypeCardRepository.getFirstItemFromStockTypeTable();
+
+		return this.crudModel.getAfterItemFromStockTable(stockCardModel);
+
+	}
+
+	public ResultSet getBeforeItemFromStockCard(StockCardModel stockCardModel) {
+
+		// var list = this.stockTypeCardRepository.getFirstItemFromStockTypeTable();
+
+		return this.crudModel.getBeforeItemFromStockTable(stockCardModel);
+
+	}
+	
+	public ResultSet getLastItemFromStockCard() {
+
+		// var list = this.stockTypeCardRepository.getFirstItemFromStockTypeTable();
+
+		return this.crudModel.getLastItemFromStockTable();
+
+	}
+	public void getFirstItemFromStockListWithKdvListWithStockType(JTable j)  {
+
+		// var list = this.stockTypeCardRepository.getFirstItemFromStockTypeTable();
+
+	this.crudModel.getFirstItemFromStockListWithKdvListWithStockType(j);
+
+	}
+
+	public void getAfterItemFromStockListWithKdvListWithStockType(StockCardModel stockCardModel,JTable j) {
+
+		// var list = this.stockTypeCardRepository.getFirstItemFromStockTypeTable();
+
+		 this.crudModel.getAfterItemFromStockListWithKdvListWithStockType(stockCardModel, j);
+
+	}
+
+	public void getBeforeItemFromStockListWithKdvListWithStockType(StockCardModel stockCardModel,JTable j) {
+
+		// var list = this.stockTypeCardRepository.getFirstItemFromStockTypeTable();
+
+		 this.crudModel.getBeforeItemFromStockListWithKdvListWithStockType(stockCardModel, j);
+
+	}
+	
+	
+	public void getLastItemFromStockListWithKdvListWithStockType(JTable j) {
+
+		// var list = this.stockTypeCardRepository.getFirstItemFromStockTypeTable();
+
+		 this.crudModel.getLastItemFromStockListWithKdvListWithStockType(j);
 
 	}
 
