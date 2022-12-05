@@ -27,6 +27,7 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -51,23 +52,26 @@ public class StockCardTable extends javax.swing.JFrame {
 	private JInternalFrame jInternalFrame;
 	private JTable table;
 	private StockCardController stockCardController;
+	private JPanel jpanel;
 
-	public StockCardTable(JPanel jpanel, StockCardController stockCardController) {
+	public StockCardTable(StockCardController stockCardController) {
 
 		this.stockCardController = stockCardController;
 		this.stockCardController.Connect();
-		init(jpanel);
+		init();
 
 	}
 
-	public void init(JPanel jpanel) {
-		jInternalFrame = new JInternalFrame();
+	public void init() {
 
+		jInternalFrame = new JInternalFrame();
+		jpanel = new JPanel();
 		// jInternalFrame. setBounds(100, 100, 450, 300);
 		jInternalFrame.setClosable(true);
 		jInternalFrame.setTitle(" Stok Kartı Listesi");
 		try {
 			jInternalFrame.setClosed(true);
+			
 		} catch (PropertyVetoException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -96,24 +100,38 @@ public class StockCardTable extends javax.swing.JFrame {
 			@Override
 			public void mousePressed(MouseEvent e) {
 
-				List<StockCardModel> list = new ArrayList<>();
-
-				StockCardModel cardModel = new StockCardModel();
-
-				InputStream İ = getClass().getResourceAsStream("/jasper/report6.jasper");
+				InputStream stringPath = getClass().getResourceAsStream("/jasper/report6.jasper");
 				try {
 
 					Collection<Map<String, ?>> parameters = new ArrayList<>();
 					Map<String, Object> maps = new HashMap<String, Object>();
+
+					maps.put("StockCode", table.getModel().getValueAt(0, 0).toString());
+					maps.put("StockName", table.getModel().getValueAt(0, 1).toString());
+					maps.put("StockType", table.getModel().getValueAt(0, 2).toString());
+					maps.put("Unit", table.getModel().getValueAt(0, 3).toString());
+					maps.put("Barcode", table.getModel().getValueAt(0, 4).toString());
+					maps.put("KdvType", table.getModel().getValueAt(0, 5).toString());
+					maps.put("Description", table.getModel().getValueAt(0, 6).toString());
+					maps.put("CreatedDate", table.getModel().getValueAt(0, 7).toString());
+					maps.put("KdvTypeId", table.getModel().getValueAt(0, 8).toString());
+					maps.put("KdvTypeName", table.getModel().getValueAt(0, 9).toString());
+					maps.put("KdvTypeCode", table.getModel().getValueAt(0, 10).toString());
+					maps.put("KdvTypeRatio", table.getModel().getValueAt(0, 11).toString());
+					maps.put("StockId", table.getModel().getValueAt(0, 12).toString());
+					maps.put("StockTypeName", table.getModel().getValueAt(0, 13).toString());
+					maps.put("StockTypeCode", table.getModel().getValueAt(0, 14).toString());
+					maps.put("StockTypeDescription", table.getModel().getValueAt(0, 15).toString());
+
 					parameters.add(maps);
 
 					JRMapCollectionDataSource beanColDataSource = new JRMapCollectionDataSource(parameters);
-					JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, beanColDataSource);
 
-					// JasperReport jasperReport = JasperCompileManager.compileReport(İ);
-					JasperPrint jp = JasperFillManager.fillReport(İ, null, new JREmptyDataSource());
+					JasperPrint jp = JasperFillManager.fillReport(stringPath, maps, beanColDataSource);
+					JasperExportManager.exportReportToPdfFile(jp, "./productsReport.pdf");
 					JFrame frame = new JFrame("Report");
 					frame.getContentPane().add(new JRViewer(jp));
+					frame.setBounds(500, 500, 1500, 1500);
 					frame.pack();
 					frame.setVisible(true);
 				} catch (JRException e1) {
@@ -121,39 +139,24 @@ public class StockCardTable extends javax.swing.JFrame {
 					e1.printStackTrace();
 				}
 
-////				
-//				 List<StockTypeCardModel> dmmuy = new ArrayList<>();
-//				 StockTypeCardModel d = new StockTypeCardModel();
-//				 d.setId(1);
-//				 d.setName("dasd");
-//				String pathName="D:\\workspace\\java\\StudyCase\\src\\jasper\\report1.jrxml";
-//				JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(dmmuy);
-//				Map<String ,Object> parm = new HashMap<String,Object>();
-//				parm.put("Paramatre1",jrBeanCollectionDataSource );
-//		
-//				JasperDesign jasperDesign;
-//				try {
-//					InputStream input = new FileInputStream(new File(pathName));
-//					jasperDesign = JRXmlLoader.load(input);
-//					JasperReport report = JasperCompileManager.compileReport(jasperDesign);
-//					JasperPrint filledReport =  JasperFillManager.fillReport(report,parm,new JREmptyDataSource());
-//					JasperViewer.viewReport(filledReport);
-//				} catch (JRException | FileNotFoundException e2) {
-//					// TODO Auto-generated catch block
-//					e2.printStackTrace();
-//				}
 			}
 		});
 		popupMenu.add(mntmNewMenuItem_1);
 
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Mail At");
+		mntmNewMenuItem_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+			//	MailUi mui = new MailUi();
+			}
+		});
 		popupMenu.add(mntmNewMenuItem_2);
 
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Stok Kartı ");
 		mntmNewMenuItem_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				StockCardUi cardUi = new StockCardUi(stockCardController, jpanel);
+				StockCardUi cardUi = new StockCardUi();
 
 				System.out.println(table.getModel().getValueAt(0, 5).toString());
 				cardUi.stock_code_textField.setText(table.getModel().getValueAt(0, 0).toString());
@@ -176,50 +179,8 @@ public class StockCardTable extends javax.swing.JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		jInternalFrame.setJMenuBar(menuBar);
 
-		JMenu mnNewMenu = new JMenu("İlk Kayıt");
-		mnNewMenu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				stockCardController.getFirstItemFromStockListWithKdvListWithStockType(table);
-			}
-		});
-		mnNewMenu.setIcon(Constant.FIRST_ARROW_ICON);
+		JMenu mnNewMenu = new JMenu("Listele");
 		menuBar.add(mnNewMenu);
-
-		JMenu mnNewMenu_1 = new JMenu("Geri");
-		mnNewMenu_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				StockCardModel stockCardModel = new StockCardModel();
-				stockCardModel.setStockCod(table.getModel().getValueAt(0, 0).toString());
-
-				stockCardController.getBeforeItemFromStockListWithKdvListWithStockType(stockCardModel, table);
-			}
-		});
-		mnNewMenu_1.setIcon(Constant.BACK_ARROW_ICON);
-		menuBar.add(mnNewMenu_1);
-
-		JMenu mnNewMenu_2 = new JMenu("İleri");
-		mnNewMenu_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				StockCardModel stockCardModel = new StockCardModel();
-				stockCardModel.setStockCod(table.getModel().getValueAt(0, 0).toString());
-				stockCardController.getAfterItemFromStockListWithKdvListWithStockType(stockCardModel, table);
-			}
-		});
-		mnNewMenu_2.setIcon(Constant.FORWARD_ARROW_ICON);
-		menuBar.add(mnNewMenu_2);
-
-		JMenu mnNewMenu_3 = new JMenu("Son Kayıt");
-		mnNewMenu_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				stockCardController.getLastItemFromStockListWithKdvListWithStockType(table);
-			}
-		});
-		mnNewMenu_3.setIcon(Constant.LAST_ARROW_ICON);
-		menuBar.add(mnNewMenu_3);
 		jInternalFrame.setVisible(true);
 	}
 

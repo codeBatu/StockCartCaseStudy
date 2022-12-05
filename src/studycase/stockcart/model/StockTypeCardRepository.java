@@ -36,7 +36,7 @@ public class StockTypeCardRepository implements ICrudRepository<StockTypeCardMod
 	public ResultSet getFirstItemFromStockTypeTable() {
 
 		try {
-			pst = con.prepareStatement(Constant.GET_FIRST_ITEM_FROM_KDV_TYPE_TABLE);
+			pst = con.prepareStatement(Constant.GET_FIRST_ITEM_FROM_STOCK_TYPE_TABLE);
 
 			return pst.executeQuery();
 		} catch (SQLException e) {
@@ -62,18 +62,12 @@ public class StockTypeCardRepository implements ICrudRepository<StockTypeCardMod
 	public ResultSet getAfterItemFromStockTypeTable(StockTypeCardModel stockTypeCardModel) {
 
 		try {
+
 			pst = con.prepareStatement(Constant.GET_NEXT_ITEM_FROM_STOCK_TYPE_TABLE_BYSTOCKTYPENAME);
 
-			pst.setString(1, stockTypeCardModel.getName());
+			pst.setInt(1, stockTypeCardModel.getId());
 
-			var result = pst.executeQuery();
-			String r = "";
-			while (result.next()) {
-				r = result.getString("kdvTypeName");
-			}
-			pst = con.prepareStatement(Constant.GET_STOCK_TYPE_TABLE_BYSTOCKTYPENAME);
-
-			pst.setString(1, r);
+			System.out.println(pst);
 
 			return pst.executeQuery();
 
@@ -89,17 +83,9 @@ public class StockTypeCardRepository implements ICrudRepository<StockTypeCardMod
 		try {
 			pst = con.prepareStatement(Constant.GET_BACK_ITEM_FROM_STOCK_TYPE_TABLE_BYSTOCKTYPENAME);
 
-			pst.setString(1, stockTypeCardModel.getName());
+			pst.setInt(1, stockTypeCardModel.getId());
 
-			var result = pst.executeQuery();
-			String r = "";
-			while (result.next()) {
-				r = result.getString("kdvTypeName");
-			}
-			pst = con.prepareStatement(Constant.GET_STOCK_TYPE_TABLE_BYSTOCKTYPENAME);
-
-			pst.setString(1, r);
-
+			System.out.println(pst);
 			return pst.executeQuery();
 
 		} catch (SQLException e) {
@@ -111,43 +97,20 @@ public class StockTypeCardRepository implements ICrudRepository<StockTypeCardMod
 
 	@Override
 	public void Create(StockTypeCardModel stockTypeCardModel) {
-		var lastId = getLastId();
+
 		try {
 
 			pst = con.prepareStatement(Constant.CREATE_STOCK_TYPE_CARD_TABLE_SQL_QUERY);
 
-			pst.setLong(1, lastId);
-			pst.setString(2, stockTypeCardModel.getCode());
-			pst.setString(3, stockTypeCardModel.getName());
-			pst.setString(4, stockTypeCardModel.getDescription());
+			pst.setString(1, stockTypeCardModel.getCode());
+			pst.setString(2, stockTypeCardModel.getName());
+			pst.setString(3, stockTypeCardModel.getDescription());
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	}
-
-	private int getLastId() {
-
-		int lastId = 0;
-
-		try {
-			pst = con.prepareStatement(Constant.GET_LAST_ID_FROM_STOCK_TYPE_CARD_TABLE_SQL_QUERY);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				lastId = rs.getInt(1);
-				lastId++;
-				return lastId;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JOptionPane.showMessageDialog(null, Integer.toString(lastId));
-
-		return 1;
 
 	}
 

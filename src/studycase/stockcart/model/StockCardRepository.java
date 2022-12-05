@@ -48,6 +48,7 @@ public class StockCardRepository {
 			ex.printStackTrace();
 		}
 		return con;
+
 	}
 
 	public ResultSet getStockCard() {
@@ -60,7 +61,7 @@ public class StockCardRepository {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return rs;
+		return null;
 	}
 
 	public void updateDb(StockCardModel sotckCardModel) {
@@ -207,15 +208,6 @@ public class StockCardRepository {
 
 			pst.setString(1, cardModel.getStockCod());
 
-			var result = pst.executeQuery();
-			String r = "";
-			while (result.next()) {
-				r = result.getString("StockCode");
-			}
-			pst = con.prepareStatement(Constant.GET_STOCK_CARD_TABLE_BYSTOCKCOD);
-
-			pst.setString(1, r);
-
 			return pst.executeQuery();
 
 		} catch (SQLException e) {
@@ -232,16 +224,6 @@ public class StockCardRepository {
 
 			pst.setString(1, cardModel.getStockCod());
 
-			var result = pst.executeQuery();
-			String r = "";
-			while (result.next()) {
-				r = result.getString("StockCode");
-				System.out.println(r);
-			}
-			pst = con.prepareStatement(Constant.GET_STOCK_CARD_TABLE_BYSTOCKCOD);
-
-			pst.setString(1, r);
-
 			return pst.executeQuery();
 
 		} catch (SQLException e) {
@@ -251,73 +233,5 @@ public class StockCardRepository {
 		return rs;
 	}
 
-	public void getFirstItemFromStockListWithKdvListWithStockType(JTable table) {
-
-		try {
-			pst = con.prepareStatement(Constant.GET_FİRST_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE);
-			table.setModel(DbUtils.resultSetToTableModel(pst.executeQuery()));
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// return rs;
-	}
-
-	public void getLastItemFromStockListWithKdvListWithStockType(JTable table) {
-
-		try {
-			pst = con.prepareStatement(
-					Constant.GET_LAST_ITEM_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE);
-			table.setModel(DbUtils.resultSetToTableModel(pst.executeQuery()));
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// return rs;
-	}
-
-	public void getAfterItemFromStockListWithKdvListWithStockType(StockCardModel cardModel, JTable table) {
-
-		try {
-			pst = con.prepareStatement(
-					Constant.GET_NEXT_ITEM_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE_BYSTOCKCODE);
-
-			pst.setString(1, cardModel.getStockCod());
-			var rs = pst.executeQuery();
-			if(rs.last()) {
-				JOptionPane.showMessageDialog(null, "Son Kayıt");
-				return ;
-			}
-			table.setModel(DbUtils.resultSetToTableModel(rs));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
-	public void getBeforeItemFromStockListWithKdvListWithStockType(StockCardModel cardModel, JTable table) {
-
-		try {
-			pst = con.prepareStatement(
-					Constant.GET_BACK_ITEM_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE_BYSTOCKCODE);
-
-			pst.setString(1, cardModel.getStockCod());
-//
-//			var rs = pst.executeQuery();
-			if(rs.last()) {
-				JOptionPane.showMessageDialog(null, "İlk Kayıt");
-				return ;
-			}
-			table.setModel(DbUtils.resultSetToTableModel(rs));
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
 
 }

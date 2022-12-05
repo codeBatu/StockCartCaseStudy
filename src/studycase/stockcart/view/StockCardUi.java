@@ -47,22 +47,22 @@ public class StockCardUi extends javax.swing.JFrame {
 	private StockTypeCardController stockTypeCardController;
 	private JPopupMenu popupMenu = new JPopupMenu();
 	JMenuItem menuItemAdd = new JMenuItem("Export Excel");
-	public JPanel contentPane;
-	public JTextField stock_code_textField;
-	
+	public JPanel contentPane = new JPanel();
+	public JTextField stock_code_textField = new JTextField();;
+
 	public JTextField barcode_textField = new JTextField();
 
+	public JButton save_btnNewButton = new JButton("Kaydet");
 
-
-	public JTextField stock_name_textField;
+	public JTextField stock_name_textField = new JTextField();;
 
 	public JFormattedTextField crated_date_formattedTextField;
 	private StockCardController stockCardController;
-	
+
 //	private JComboBox<Double> kdv_type_comboBox = new JComboBox<>();;
 	public JComboBox<Integer> stock_type_comboBox = new JComboBox<>();;;
 
-	JComboBox<Integer> kdv_type_comboBox2 = new JComboBox<>();;;
+	public JComboBox<Integer> kdv_type_comboBox2 = new JComboBox<>();;;
 	public JComboBox<String> unit_comboBox = new JComboBox();
 	private JInternalFrame jInternalFrame;
 	public JTextArea description_textArea;
@@ -72,11 +72,12 @@ public class StockCardUi extends javax.swing.JFrame {
 
 	private JTable table_3;
 
-	public StockCardUi(StockCardController stockCardController, JPanel jpanel) {
-		init(jpanel);
-		this.stockCardController = stockCardController;
-		stockCardController.Connect();
-		
+	public StockCardUi() {
+
+		// this.stockCardController = stockCardController;
+		// stockCardController.Connect();
+		init(contentPane);
+
 		try {
 			stockTypecomboboxFill();
 			kdvTypecomboboxFill();
@@ -112,25 +113,25 @@ public class StockCardUi extends javax.swing.JFrame {
 
 	private void stockTypecomboboxFill() throws SQLException {
 
-		var rs = this.stockCardController.getStockTypeByKdvTypeId();
-		while (rs.next()) {
-			stock_type_comboBox.addItem(rs.getInt("StockId"));
-		}
+		// var rs = this.stockCardController.getStockTypeByKdvTypeId();
+		// while (rs.next()) {
+		// stock_type_comboBox.addItem(rs.getInt("StockId"));
+//		}
 
 	}
 
 	private void kdvTypecomboboxFill() throws SQLException {
 
-		var rs = stockCardController.getKdvTypeTable();
-		try {
-			while (rs.next()) {
-				kdv_type_comboBox2.addItem(rs.getInt("KdvTypeId"));
-
-			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		var rs = stockCardController.getKdvTypeTable();
+//		try {
+//			while (rs.next()) {
+//				kdv_type_comboBox2.addItem(rs.getInt("KdvTypeId"));
+//
+//			}
+//		} catch (SQLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 
 	}
 
@@ -190,7 +191,6 @@ public class StockCardUi extends javax.swing.JFrame {
 		jInternalFrame.getContentPane().add(barcode_lbl);
 		barcode_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
-	
 		barcode_textField.setBounds(143, 105, 247, 20);
 		jInternalFrame.getContentPane().add(barcode_textField);
 		barcode_textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -225,14 +225,7 @@ public class StockCardUi extends javax.swing.JFrame {
 		unit_lbl.setBounds(441, 47, 78, 25);
 		jInternalFrame.getContentPane().add(unit_lbl);
 		unit_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		JButton save_btnNewButton = new JButton("Kaydet");
-		save_btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
 
-				stockCardController.createDb(fill());
-
-			}
-		});
 		save_btnNewButton.setBounds(397, 176, 190, 46);
 		jInternalFrame.getContentPane().add(save_btnNewButton);
 
@@ -257,11 +250,9 @@ public class StockCardUi extends javax.swing.JFrame {
 		update_btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				stockCardController.updateDb(fill());
+				// stockCardController.updateDb(fill());
 
 				// stockCardController.LoadData(table_3);
-
-				Clear();
 
 			}
 		});
@@ -284,7 +275,7 @@ public class StockCardUi extends javax.swing.JFrame {
 				stockCardModel.setDescription(description_textArea.getText());
 				stockCardModel.setCratedDate(crated_date_formattedTextField.getText());
 
-				stockCardController.createDb(stockCardModel);
+				// stockCardController.createDb(stockCardModel);
 
 				// stockCardController.LoadData(table_3);
 				// table.getTransferHandler().exportToClipboard(table,
@@ -336,14 +327,13 @@ public class StockCardUi extends javax.swing.JFrame {
 		jInternalFrame.setJMenuBar(menuBar);
 
 		JMenu mnNewMenu_2 = new JMenu("İlk Kayıt");
-		
 
 		mnNewMenu_2.setIcon(Constant.FIRST_ARROW_ICON);
 		mnNewMenu_2.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				var result = stockCardController.getFirstItemFromStockCard();
+				ResultSet result = stockCardController.getFirstItemFromStockCard();
 
 				try {
 
@@ -375,7 +365,7 @@ public class StockCardUi extends javax.swing.JFrame {
 			public void mousePressed(MouseEvent e) {
 				StockCardModel cardModel = new StockCardModel();
 				cardModel.setStockCod(stock_code_textField.getText());
-				var result = stockCardController.getBeforeItemFromStockCard(cardModel);
+				ResultSet result = stockCardController.getBeforeItemFromStockCard(cardModel);
 
 				try {
 
@@ -414,7 +404,7 @@ public class StockCardUi extends javax.swing.JFrame {
 			public void mousePressed(MouseEvent e) {
 				StockCardModel cardModel = new StockCardModel();
 				cardModel.setStockCod(stock_code_textField.getText());
-				var result = stockCardController.getAfterItemFromStockCard(cardModel);
+				ResultSet result = stockCardController.getAfterItemFromStockCard(cardModel);
 
 				try {
 
@@ -451,7 +441,7 @@ public class StockCardUi extends javax.swing.JFrame {
 		mnNewMenu_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				var result = stockCardController.getLastItemFromStockCard();
+				ResultSet result = stockCardController.getLastItemFromStockCard();
 
 				try {
 

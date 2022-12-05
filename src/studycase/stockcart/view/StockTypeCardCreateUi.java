@@ -31,13 +31,88 @@ import javax.swing.JOptionPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class StockTypeCardCreateUi {
+public class StockTypeCardCreateUi extends JInternalFrame {
 
 	private JTextField stock_type_code_textField;
+
+	public JTextField getStock_type_code_textField() {
+		return stock_type_code_textField;
+	}
+
+	public void setStock_type_code_textField(JTextField stock_type_code_textField) {
+		this.stock_type_code_textField = stock_type_code_textField;
+	}
+
+	public JTextField getStock_type_name_textField() {
+		return stock_type_name_textField;
+	}
+
+	public void setStock_type_name_textField(JTextField stock_type_name_textField) {
+		this.stock_type_name_textField = stock_type_name_textField;
+	}
+
+	public JTextArea getStock_type_description_textArea() {
+		return stock_type_description_textArea;
+	}
+
+	public void setStock_type_description_textArea(JTextArea stock_type_description_textArea) {
+		this.stock_type_description_textArea = stock_type_description_textArea;
+	}
+
+	public JMenu getMnNewMenu_2() {
+		return mnNewMenu_2;
+	}
+
+	public void setMnNewMenu_2(JMenu mnNewMenu_2) {
+		this.mnNewMenu_2 = mnNewMenu_2;
+	}
+
+	public JButton getBtnNewButton() {
+		return btnNewButton;
+	}
+
+	public void setBtnNewButton(JButton btnNewButton) {
+		this.btnNewButton = btnNewButton;
+	}
+
+	public JMenu getMnNewMenu_1() {
+		return mnNewMenu_1;
+	}
+
+	public void setMnNewMenu_1(JMenu mnNewMenu_1) {
+		this.mnNewMenu_1 = mnNewMenu_1;
+	}
+
+	public JMenu getMnNewMenu() {
+		return mnNewMenu;
+	}
+
+	public void setMnNewMenu(JMenu mnNewMenu) {
+		this.mnNewMenu = mnNewMenu;
+	}
+	
+
+	public JMenu getMnNewMenu_3() {
+		return mnNewMenu_3;
+	}
+
+	public void setMnNewMenu_3(JMenu mnNewMenu_3) {
+		this.mnNewMenu_3 = mnNewMenu_3;
+	}
+
 	private JTextField stock_type_name_textField;
 	private JTextArea stock_type_description_textArea;
 	private StockTypeCardController stockTypeCardController;
-	private JInternalFrame jInternalFrame;
+	JMenu mnNewMenu_2 = new JMenu("İlk Kayıt");
+	JButton btnNewButton = new JButton("Kaydet");
+	JMenu mnNewMenu_1 = new JMenu("Geri");
+	JMenu mnNewMenu = new JMenu("İleri");
+	JMenu mnNewMenu_3 = new JMenu("Son Kayıt");
+	private final JLabel lblNewLabel = new JLabel("id");
+
+	public JLabel getLblNewLabel() {
+		return lblNewLabel;
+	}
 
 	private void Clear() {
 
@@ -46,194 +121,89 @@ public class StockTypeCardCreateUi {
 		stock_type_description_textArea.setText("");
 
 		// crated_date_formattedTextField.setText("");
+
 	}
 
-	private void init(JPanel jpanel) {
-		jInternalFrame = new JInternalFrame();
+	private void init() {
 
 		// jInternalFrame. setBounds(100, 100, 450, 300);
-		jInternalFrame.setClosable(true);
-		jInternalFrame.setTitle("Yeni Stok Tip Kartı");
+		this.setClosable(true);
+		this.setTitle("Yeni Stok Tip Kartı");
 		try {
-			jInternalFrame.setClosed(true);
+			this.setClosed(true);
 		} catch (PropertyVetoException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		// jInternalFrame().setLayout(null);
-		jInternalFrame.setBounds(10, 11, 602, 458);
-		jpanel.add(jInternalFrame);
-		jInternalFrame.getContentPane().setLayout(null);
+		this.setBounds(10, 11, 602, 458);
+
+		this.getContentPane().setLayout(null);
 
 		JLabel stock_type_code_lbl = new JLabel("Stok Tip Kodu");
 		stock_type_code_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		stock_type_code_lbl.setBounds(20, 36, 102, 19);
-		jInternalFrame.getContentPane().add(stock_type_code_lbl);
+		this.getContentPane().add(stock_type_code_lbl);
 
 		stock_type_code_textField = new JTextField();
 		stock_type_code_textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		stock_type_code_textField.setColumns(10);
 		stock_type_code_textField.setBounds(233, 20, 247, 52);
-		jInternalFrame.getContentPane().add(stock_type_code_textField);
+		this.getContentPane().add(stock_type_code_textField);
 
 		stock_type_name_textField = new JTextField();
 		stock_type_name_textField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		stock_type_name_textField.setColumns(10);
 		stock_type_name_textField.setBounds(233, 83, 247, 52);
-		jInternalFrame.getContentPane().add(stock_type_name_textField);
+		this.getContentPane().add(stock_type_name_textField);
 
 		JLabel stock_type_name_lbl = new JLabel("Stok Tip Adı");
 		stock_type_name_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		stock_type_name_lbl.setBounds(20, 99, 102, 19);
-		jInternalFrame.getContentPane().add(stock_type_name_lbl);
+		this.getContentPane().add(stock_type_name_lbl);
 
 		JLabel stock_type_description_lbl = new JLabel("Stok Tip Açıklama");
 		stock_type_description_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		stock_type_description_lbl.setBounds(20, 155, 165, 19);
-		jInternalFrame.getContentPane().add(stock_type_description_lbl);
+		this.getContentPane().add(stock_type_description_lbl);
 
 		stock_type_description_textArea = new JTextArea();
 		stock_type_description_textArea.setBounds(233, 146, 247, 150);
-		jInternalFrame.getContentPane().add(stock_type_description_textArea);
-
-		JButton btnNewButton = new JButton("Kaydet");
-		btnNewButton.setIcon(new ImageIcon("D:\\workspace\\java\\StudyCase\\Icons\\next.ico"));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				stockTypeCardController.Create(fill());
-				Clear();
-			}
-		});
+		this.getContentPane().add(stock_type_description_textArea);
 
 		btnNewButton.setBounds(91, 307, 428, 88);
-		jInternalFrame.getContentPane().add(btnNewButton);
+		this.getContentPane().add(btnNewButton);
+		lblNewLabel.setBounds(491, 0, 46, 14);
+		
+		getContentPane().add(lblNewLabel);
 		JMenuBar menuBar = new JMenuBar();
-		jInternalFrame.setJMenuBar(menuBar);
+		this.setJMenuBar(menuBar);
 
-		JMenu mnNewMenu_2 = new JMenu("İlk Kayıt");
 		mnNewMenu_2.setIconTextGap(1);
 
 		mnNewMenu_2.setIcon(Constant.FIRST_ARROW_ICON);
-		mnNewMenu_2.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mousePressed(MouseEvent e) {
-				var result = stockTypeCardController.getFirstItemFromStockType();
-
-				try {
-
-					result.first();
-					// stock_type_code_textField.setText(result.getNString("StockTypeCode"));
-					stock_type_code_textField.setText(result.getString("StockTypeCode"));
-					stock_type_name_textField.setText(result.getString("StockTypeName"));
-					stock_type_description_textArea.setText(result.getString("StockTypeDescription"));
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
 		menuBar.add(mnNewMenu_2);
 
-		JMenu mnNewMenu_1 = new JMenu("Geri");
-
 		mnNewMenu_1.setIcon(Constant.BACK_ARROW_ICON);
-		mnNewMenu_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				StockTypeCardModel stockTypeCardModel = new StockTypeCardModel();
-				stockTypeCardModel.setName(stock_type_name_textField.getText());
-				var result = stockTypeCardController.getBeforeItemFromStockTypeTable(stockTypeCardModel);
 
-				try {
-
-					while (result.next()) {
-
-						stock_type_name_textField.setText(result.getString("StockTypeName"));
-						stock_type_code_textField.setText(result.getString("StockTypeCode"));
-						stock_type_description_textArea.setText(result.getString("StockTypeDescription"));
-					}
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
 		menuBar.add(mnNewMenu_1);
-
-		JMenu mnNewMenu = new JMenu("İleri");
 
 		mnNewMenu.setIcon(Constant.FORWARD_ARROW_ICON);
 
-		mnNewMenu.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				StockTypeCardModel stockTypeCardModel = new StockTypeCardModel();
-				stockTypeCardModel.setName(stock_type_name_textField.getText());
-				var result = stockTypeCardController.getAfterItemFromStockTypeTable(stockTypeCardModel);
-
-				try {
-
-					while (result.next()) {
-						stock_type_name_textField.setText(result.getString("StockTypeName"));
-						stock_type_code_textField.setText(result.getString("StockTypeCode"));
-						stock_type_description_textArea.setText(result.getString("StockTypeDescription"));
-					}
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-			}
-		});
 		menuBar.add(mnNewMenu);
 
-		JMenu mnNewMenu_3 = new JMenu("Son Kayıt");
-		
-
 		mnNewMenu_3.setIcon(Constant.LAST_ARROW_ICON);
-		mnNewMenu_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				var result = stockTypeCardController.getLastItemFromStockTypeTable();
 
-				try {
-
-					while (result.next()) {
-						stock_type_name_textField.setText(result.getString("StockTypeName"));
-						stock_type_code_textField.setText(result.getString("StockTypeCode"));
-						stock_type_description_textArea.setText(result.getString("StockTypeDescription"));
-					}
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
 		menuBar.add(mnNewMenu_3);
 
-		jInternalFrame.setVisible(true);
+		this.setVisible(true);
 	}
 
-	public StockTypeCardCreateUi(JPanel jpanel, StockTypeCardController stockTypeCardController) {
-		
-		this.stockTypeCardController = stockTypeCardController;
-		this.stockTypeCardController.Connect();
-		init(jpanel);
+	public StockTypeCardCreateUi() {
+
+		init();
 
 	}
 
-	private StockTypeCardModel fill() {
-		StockTypeCardModel stockCardModel = new StockTypeCardModel();
-
-		stockCardModel.setCode(stock_type_code_textField.getText());
-		stockCardModel.setName(stock_type_name_textField.getText());
-		// stockCardModel.setStockType((int) stock_type_comboBox.getSelectedItem());
-		stockCardModel.setDescription(stock_type_description_textArea.getText());
-		return stockCardModel;
-	}
 }
