@@ -22,7 +22,7 @@ public class KdvTypeCardRepository implements ICrudRepository<KdvTypeCardModel> 
 	public void Create(KdvTypeCardModel kdvTypeCardModel) {
 
 		try {
-
+			Connect();
 			pst = con.prepareStatement(Constant.CREATE_KDV_TYPE_CARD_TABLE_SQL_QUERY);
 
 			pst.setString(1, kdvTypeCardModel.getCode());
@@ -36,6 +36,23 @@ public class KdvTypeCardRepository implements ICrudRepository<KdvTypeCardModel> 
 		}
 
 	}
+
+//	public void deleteDb(Integer stockId) {
+//		try {
+//			Connect();
+//			pst = con.prepareStatement(Constant.DELETE_KDV_TYPE_TABLE_BY_ID_SQL_QUERY);
+//
+//			pst.setInt(1, stockId);
+//
+//			pst.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		JOptionPane.showMessageDialog(null, "Data update Success");
+//	}
 
 	@Override
 	public void Delete() {
@@ -105,7 +122,7 @@ public class KdvTypeCardRepository implements ICrudRepository<KdvTypeCardModel> 
 
 			pst = con.prepareStatement(Constant.GET_NEXT_ITEM_FROM_KDV_TYPE_TABLE_BYKDVTYPENAME);
 
-			pst.setInt(1, cardModel.getId());
+		//	pst.setInt(1, cardModel.getId());
 
 			return pst.executeQuery();
 
@@ -121,7 +138,7 @@ public class KdvTypeCardRepository implements ICrudRepository<KdvTypeCardModel> 
 		try {
 			pst = con.prepareStatement(Constant.GET_BACK_ITEM_FROM_kdv_TYPE_TABLE_BYKDVTYPENAME);
 
-			pst.setInt(1, cardModel.getId());
+	//		pst.setInt(1, cardModel.getId());
 
 			return pst.executeQuery();
 

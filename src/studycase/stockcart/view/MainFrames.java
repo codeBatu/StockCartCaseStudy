@@ -11,6 +11,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainFrames extends JFrame {
 
@@ -84,7 +86,9 @@ public void setMntmNewMenuItem_3(JMenuItem mntmNewMenuItem_3) {
 
 	
 
+		
 		mnNewMenu.add(mntmNewMenuItem_1);
+		
 	
 
 		

@@ -2,6 +2,7 @@ package studycase.stockcart.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -43,36 +44,45 @@ public class MailController implements ActionListener {
 	}
 
 	public MailUi initMailUi(JTable table) {
-		mailUi.getBtnNewButton().addActionListener(this);
-		mailUi.getBtnNewButton().addActionListener(new ActionListener() {
+		mailUi.getSendButton().addActionListener(this);
+		mailUi.getSendButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InputStream stringPath = getClass().getResourceAsStream("/jasper/report6.jasper");
+				InputStream stringPath = getClass().getResourceAsStream("/jasper/report8.jasper");
 				Collection<Map<String, ?>> parameters = new ArrayList<>();
 				Map<String, Object> maps = new HashMap<String, Object>();
-				int selectedRow = table.getSelectedRow();
-				maps.put("StockCode", table.getModel().getValueAt(selectedRow, 0).toString());
-				maps.put("StockName", table.getModel().getValueAt(selectedRow, 1).toString());
-				maps.put("StockType", table.getModel().getValueAt(selectedRow, 2).toString());
-				maps.put("Unit", table.getModel().getValueAt(selectedRow, 3).toString());
-				maps.put("Barcode", table.getModel().getValueAt(selectedRow, 4).toString());
-				maps.put("KdvType", table.getModel().getValueAt(selectedRow, 5).toString());
-				maps.put("Description", table.getModel().getValueAt(selectedRow, 6).toString());
-				maps.put("CreatedDate", table.getModel().getValueAt(selectedRow, 7).toString());
-				maps.put("KdvTypeId", table.getModel().getValueAt(selectedRow, 8).toString());
-				maps.put("KdvTypeName", table.getModel().getValueAt(selectedRow, 9).toString());
-				maps.put("KdvTypeCode", table.getModel().getValueAt(selectedRow, 10).toString());
-				maps.put("KdvTypeRatio", table.getModel().getValueAt(selectedRow, 11).toString());
-				maps.put("StockId", table.getModel().getValueAt(selectedRow, 12).toString());
-				maps.put("StockTypeName", table.getModel().getValueAt(selectedRow, 13).toString());
-				maps.put("StockTypeCode", table.getModel().getValueAt(selectedRow, 14).toString());
-				maps.put("StockTypeDescription", table.getModel().getValueAt(selectedRow, 15).toString());
 
-				parameters.add(maps);
+				for (int i = 0; i < table.getRowCount(); i++) {
+
+					maps.put("StockCode", table.getModel().getValueAt(i, 0).toString());
+					maps.put("StockName", table.getModel().getValueAt(i, 1).toString());
+					maps.put("StockType", table.getModel().getValueAt(i, 2).toString());
+					maps.put("Unit", table.getModel().getValueAt(i, 3).toString());
+					maps.put("Barcode", table.getModel().getValueAt(i, 4).toString());
+					maps.put("KdvType", table.getModel().getValueAt(i, 5).toString());
+					maps.put("Description", table.getModel().getValueAt(i, 6).toString());
+					maps.put("CreatedDate", table.getModel().getValueAt(i, 7).toString());
+					maps.put("KdvTypeId", table.getModel().getValueAt(i, 8).toString());
+					maps.put("KdvTypeName", table.getModel().getValueAt(i, 9).toString());
+					maps.put("KdvTypeCode", table.getModel().getValueAt(i, 10).toString());
+					maps.put("KdvTypeRatio", table.getModel().getValueAt(i, 11).toString()!=null?table.getModel().getValueAt(i, 11).toString():"");
+				//	maps.put("StockId", table.getModel().getValueAt(i, 11).toString()!=null?table.getModel().getValueAt(i, 11).toString():"");
+					maps.put("StockId", table.getModel().getValueAt(i, 11).toString());
+					maps.put("StockTypeName", table.getModel().getValueAt(i, 13));
+
+					maps.put("StockTypeDescription", table.getModel().getValueAt(i, 14));
+					parameters.add(maps);
+
+					parameters.add(maps);
+
+				}
 
 				JRMapCollectionDataSource beanColDataSource = new JRMapCollectionDataSource(parameters);
 
 				try {
+
 					JasperPrint jp = JasperFillManager.fillReport(stringPath, maps, beanColDataSource);
+
+					JasperExportManager.exportReportToPdfFile(jp, "C:\\Users\\mnf_4\\OneDrive\\Masaüstü\\report.pdf");
 					String from = "erkenbatuh@yandex.com";
 					String pass = "123Batu123*";
 
@@ -102,17 +112,22 @@ public class MailController implements ActionListener {
 
 						message.setFrom(new InternetAddress(from));
 
-						message.addRecipient(Message.RecipientType.TO,
-								new InternetAddress(mailUi.getTextField_2().getText()));
+						message.addRecipient(Message.RecipientType.TO, new InternetAddress("mnf_41@hotmail.com"));
 
 						message.setSubject("deneme");
 
 						message.setText("deneme");
-//						byte[] pdfBytes = JasperExportManager.exportReportToPdf(jp);
-//						System.out.println(pdfBytes);
-						// Send message
+						Multipart multipart = new MimeMultipart();
+
+						BodyPart bodyPart = new MimeBodyPart();
+						bodyPart.setDataHandler(new DataHandler(new javax.activation.FileDataSource(
+								"C:\\Users\\mnf_4\\OneDrive\\Masaüstü\\report.pdf")));
+						bodyPart.setFileName("report.pdf");
+						multipart.addBodyPart(bodyPart);
+						message.setContent(multipart);
+
 						Transport.send(message);
-						System.out.println("deneme message is successfully....");
+
 					} catch (MessagingException mex) {
 						mex.printStackTrace();
 

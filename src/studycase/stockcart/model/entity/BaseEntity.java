@@ -1,11 +1,11 @@
 package studycase.stockcart.model.entity;
 
 public class BaseEntity {
-	private Integer id;
-	public Integer getId() {
+	private KdvTypeCardModel id;
+	public KdvTypeCardModel getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(KdvTypeCardModel id) {
 		this.id = id;
 	}
 	public String getCode() {

@@ -5,20 +5,31 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+
+import studycase.stockcart.model.entity.KdvTypeCardModel;
 import studycase.stockcart.model.entity.StockCardModel;
 import studycase.stockcart.model.entity.StockTypeCardModel;
+import studycase.stockcart.model.entity.UtilEntity;
 import studycase.stockcart.util.Constant;
+import studycase.stockcart.util.HibernateUtil;
 
 public class StockCardRepository {
 
 	Connection con = null;
 	PreparedStatement pst;
 	ResultSet rs;
+
+	public StockCardRepository() {
+		Connect();
+
+	}
 
 	public void LoadData(JTable table) {
 
@@ -51,133 +62,115 @@ public class StockCardRepository {
 
 	}
 
-	public ResultSet getStockCard() {
-		try {
-			pst = con.prepareStatement(
+	public List<UtilEntity> getStockCard() {
+
+		List<UtilEntity> stocktype = new ArrayList<>();
+
+		// Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+//			Query<UtilEntity> query = session.createNativeQuery(
+//					Constant.GET_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE_SQL_QUERY);
+//			stocktype = query.getResultList();
+//			
+//			stocktype.stream().map
+			Query query = session.createNativeQuery(
 					Constant.GET_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE_SQL_QUERY);
+			List<Object[]> results = query.getResultList();
 
-			return pst.executeQuery();
+			for (Object[] row : results) {
+				UtilEntity model = new UtilEntity();
+				model.setStockCode(row[0].toString());
+				model.setStock_name(row[1].toString());
+				model.setStocktype_id((Integer) row[2]);
+				model.setUnit(row[3].toString());
+				model.setBarcode(row[4].toString());
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
+				model.setKdvtype_id((Integer) row[5]);
+				model.setStockDescription(row[6].toString());
+				model.setCreated_date(row[7].toString());
+
+				model.setKdvTypeId((Integer) row[8]);
+				model.setKdvTypeName(row[9].toString());
+				model.setKdvTypeCode(row[10].toString());
+				model.setRatio((Double) row[11]);
+				model.setStockTypeId((Integer) row[12]);
+				model.setStockTypeName(row[13].toString());
+				model.setStockTypeCode(row[14].toString());
+				model.setStockDescription(row[15].toString());
+
+				stocktype.add(model);
+
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+
 		}
-		return null;
+
+		return stocktype;
 	}
 
-	public void updateDb(StockCardModel sotckCardModel) {
-		try {
-			pst = con.prepareStatement(Constant.UPDATE_STOCK_CARD_TABLE_BY_STOCKCARDNO_SQL_QUERY);
+	public List<KdvTypeCardModel> getKdvTypeTable() {
+		List<KdvTypeCardModel> kdvType = new ArrayList<>();
 
-			pst.setString(8, sotckCardModel.getStockCod());
-			pst.setString(1, sotckCardModel.getStockName());
-			pst.setInt(2, sotckCardModel.getStockType());
-			pst.setString(3, sotckCardModel.getUnit());
-			pst.setString(4, sotckCardModel.getBarcode());
-			pst.setDouble(5, sotckCardModel.getKdvType());
-			pst.setString(6, sotckCardModel.getDescription());
-			pst.setString(7, sotckCardModel.getCratedDate());
+		// Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-			pst.executeUpdate();
+			String sql = "SELECT * FROM kdvtypetbl";
+			Query query = session.createNativeQuery(sql);
+			List<Object[]> results = query.getResultList();
+			for (Object[] row : results) {
+				KdvTypeCardModel model = new KdvTypeCardModel();
+				model.setId((Integer) row[0]);
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				kdvType.add(model);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+
 		}
+		if (kdvType.isEmpty()) {
 
-		JOptionPane.showMessageDialog(null, "Data update Success");
-
+			return new ArrayList<>();
+		}
+		return kdvType;
 	}
 
-	public void createDb(StockCardModel sotckCardModel) {
-		try {
-			pst = con.prepareStatement(Constant.CREATE_STOCK_CARD_TABLE_SQL_QUERY);
-			pst.setString(1, sotckCardModel.getStockCod());
-			pst.setString(2, sotckCardModel.getStockName());
-			pst.setInt(3, sotckCardModel.getStockType());
-			pst.setString(4, sotckCardModel.getUnit());
-			pst.setString(5, sotckCardModel.getBarcode());
-			pst.setDouble(6, sotckCardModel.getKdvType());
-			pst.setString(7, sotckCardModel.getDescription());
-			pst.setString(8, sotckCardModel.getCratedDate());
+	public List<StockTypeCardModel> getStockTypeByStockIdList() {
 
-			pst.executeUpdate();
+		List<StockTypeCardModel> stocktype = new ArrayList<>();
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		// Transaction transaction = null;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
+			String sql = "SELECT * FROM stocktypetbl";
+			Query query = session.createNativeQuery(sql);
+			List<Object[]> results = query.getResultList();
+			for (Object[] row : results) {
+				StockTypeCardModel model = new StockTypeCardModel();
+				model.setId((Integer) row[0]);
+
+				stocktype.add(model);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+
 		}
+		if (stocktype.isEmpty()) {
 
-		JOptionPane.showMessageDialog(null, "Data update Success");
-	}
-
-	public void deleteDb(String stockCod) {
-		try {
-			pst = con.prepareStatement(Constant.DELETE_STOCK_CARD_TABLE_BY_STOCKCARDNO_SQL_QUERY);
-
-			pst.setString(1, stockCod);
-
-			pst.executeUpdate();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return new ArrayList<>();
 		}
+		return stocktype;
 
-		JOptionPane.showMessageDialog(null, "Data update Success");
-	}
-
-	public ResultSet getStockCartByStockCode(String stockCod) {
-		try {
-			pst = con.prepareStatement(Constant.GET_STOCK_CARD_TABLE_BY_STOCKCARDNO_SQL_QUERY);
-
-			pst.setString(1, stockCod);
-
-			JOptionPane.showMessageDialog(null, "Data update Success");
-
-			return pst.executeQuery();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return rs;
-
-	}
-
-	public ResultSet getKdvTypeTable() {
-		try {
-			pst = con.prepareStatement(Constant.GET_KDV_TYPE_TABLE_SQL_QUERY);
-
-			rs = pst.executeQuery();
-
-			return rs;
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return rs;
-	}
-
-	public ResultSet getStockTypeByKdvTypeId() {
-		try {
-			pst = con.prepareStatement(Constant.GET_STOCK_TYPE_TABLE_SQL_QUERY);
-
-			rs = pst.executeQuery();
-
-			return rs;
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return rs;
 	}
 
 	public ResultSet getFirstItemFromStockTable() {
 
 		try {
+
 			pst = con.prepareStatement(Constant.GET_FIRST_ITEM_FROM_STOCK_CARD_TABLE);
 
 			return pst.executeQuery();
@@ -232,6 +225,5 @@ public class StockCardRepository {
 		}
 		return rs;
 	}
-
 
 }

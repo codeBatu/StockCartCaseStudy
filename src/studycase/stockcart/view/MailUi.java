@@ -19,22 +19,14 @@ import java.awt.event.ActionEvent;
 
 public class MailUi extends JInternalFrame {
 
-	private JTextField textField_2 = new JTextField();;
+	private JTextField mailTextField = new JTextField();;
 
-	public JTextField getTextField_2() {
-		return textField_2;
+	public JTextField getMailTextField() {
+		return mailTextField;
 	}
 
-	public void setTextField_2(JTextField textField_2) {
-		this.textField_2 = textField_2;
-	}
-
-	public JButton getBtnNewButton() {
-		return btnNewButton;
-	}
-
-	public void setBtnNewButton(JButton btnNewButton) {
-		this.btnNewButton = btnNewButton;
+	public JButton getSendButton() {
+		return sendButton;
 	}
 
 	public MailUi() {
@@ -42,36 +34,28 @@ public class MailUi extends JInternalFrame {
 
 	}
 
-	private JButton btnNewButton = new JButton("Send");
+	private JButton sendButton = new JButton("Send");
 
 	private void init() {
 
-		// jInternalFrame. setBounds(100, 100, 450, 300);
 		this.setClosable(true);
-		this.setTitle("Yeni Kdv Tip Kartı");
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		// jInternalFrame().setLayout(null);
+		this.setTitle("Send Mail");
+
 		this.setBounds(10, 11, 316, 86);
 
 		this.getContentPane().setLayout(null);
 
-		textField_2.setBounds(76, 8, 86, 20);
-		this.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		mailTextField.setBounds(76, 8, 86, 20);
+		this.getContentPane().add(mailTextField);
+		mailTextField.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("Alıcı");
 		lblNewLabel_2.setBounds(10, 11, 46, 14);
 		this.getContentPane().add(lblNewLabel_2);
 //		
 
-	
-		btnNewButton.setBounds(177, 7, 89, 23);
-		this.getContentPane().add(btnNewButton);
+		sendButton.setBounds(177, 7, 89, 23);
+		this.getContentPane().add(sendButton);
 		this.setVisible(true);
 	}
 }

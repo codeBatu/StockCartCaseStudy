@@ -33,6 +33,23 @@ public class StockTypeCardRepository implements ICrudRepository<StockTypeCardMod
 		return con;
 	}
 
+	public void deleteDb(Integer kdvId) {
+		try {
+			Connect();
+			pst = con.prepareStatement(Constant.DELETE_STOCK_TYPE_TABLE_BY_ID_SQL_QUERY);
+
+			pst.setInt(1, kdvId);
+
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		JOptionPane.showMessageDialog(null, "Data update Success");
+	}
+
 	public ResultSet getFirstItemFromStockTypeTable() {
 
 		try {
@@ -65,7 +82,7 @@ public class StockTypeCardRepository implements ICrudRepository<StockTypeCardMod
 
 			pst = con.prepareStatement(Constant.GET_NEXT_ITEM_FROM_STOCK_TYPE_TABLE_BYSTOCKTYPENAME);
 
-			pst.setInt(1, stockTypeCardModel.getId());
+//			pst.setInt(1, stockTypeCardModel.getId());
 
 			System.out.println(pst);
 
@@ -83,7 +100,7 @@ public class StockTypeCardRepository implements ICrudRepository<StockTypeCardMod
 		try {
 			pst = con.prepareStatement(Constant.GET_BACK_ITEM_FROM_STOCK_TYPE_TABLE_BYSTOCKTYPENAME);
 
-			pst.setInt(1, stockTypeCardModel.getId());
+//			pst.setInt(1, stockTypeCardModel.getId());
 
 			System.out.println(pst);
 			return pst.executeQuery();

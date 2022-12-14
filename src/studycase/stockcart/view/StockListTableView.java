@@ -88,9 +88,9 @@ public class StockListTableView extends JInternalFrame {
 		this.mnNewMenu = mnNewMenu;
 	}
 
-	public StockListTableView() throws PropertyVetoException {
+	public StockListTableView() {
 		setClosable(true);
-		setClosed(true);
+
 		setBounds(100, 100, 1083, 798);
 		getContentPane().setLayout(null);
 
@@ -117,7 +117,7 @@ public class StockListTableView extends JInternalFrame {
 			}
 		});
 		popupMenu.add(menuItemExportExcel);
-	
+
 		popupMenu.add(menuItemScreen);
 		popupMenu.add(menuItemSendMail);
 		popupMenu.add(menuItemGetStockCard);

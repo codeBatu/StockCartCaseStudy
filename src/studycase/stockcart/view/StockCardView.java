@@ -1,18 +1,9 @@
+
 package studycase.stockcart.view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.beans.PropertyVetoException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,29 +15,21 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import studycase.stockcart.controller.StockCardController;
-import studycase.stockcart.controller.StockTypeCardController;
-import studycase.stockcart.model.DbUtils;
-import studycase.stockcart.model.entity.StockCardModel;
 import studycase.stockcart.util.Constant;
 
 public class StockCardView extends JInternalFrame {
 
-	private StockCardController stockCardController;
-
 	public JTextField getStock_code_textField() {
 		return stock_code_textField;
+
 	}
 
 	public void setStock_code_textField(JTextField stock_code_textField) {
+
 		this.stock_code_textField = stock_code_textField;
 	}
 
@@ -59,11 +42,11 @@ public class StockCardView extends JInternalFrame {
 	}
 
 	public JButton getSave_btnNewButton() {
-		return save_btnNewButton;
+		return save_Button;
 	}
 
 	public void setSave_btnNewButton(JButton save_btnNewButton) {
-		this.save_btnNewButton = save_btnNewButton;
+		this.save_Button = save_btnNewButton;
 	}
 
 	public JTextField getStock_name_textField() {
@@ -82,15 +65,7 @@ public class StockCardView extends JInternalFrame {
 		this.crated_date_formattedTextField = crated_date_formattedTextField;
 	}
 
-	public JComboBox<Double> getKdv_type_comboBox() {
-		return kdv_type_comboBox;
-	}
-
-	public void setKdv_type_comboBox(JComboBox<Double> kdv_type_comboBox) {
-		this.kdv_type_comboBox = kdv_type_comboBox;
-	}
-
-	public JComboBox<Integer> getStock_type_comboBox() {
+	public JComboBox getStock_type_comboBox() {
 		return stock_type_comboBox;
 	}
 
@@ -122,25 +97,52 @@ public class StockCardView extends JInternalFrame {
 		this.description_textArea = description_textArea;
 	}
 
+	private JButton firstItemButton = new JButton("İlk Kayıt");
+
+	public JButton getFirstItemButton() {
+		return firstItemButton;
+	}
+
+	public void setFirstItemButton(JButton firstItemButton) {
+		this.firstItemButton = firstItemButton;
+	}
+
+	public JButton getPreviusItemButton() {
+		return previusItemButton;
+	}
+
+	public JButton getForwardItemBtn() {
+		return forwardItemBtn;
+	}
+
+	public JButton getLastItemButton() {
+		return lastItemButton;
+	}
+
+	private final JButton previusItemButton = new JButton("Geri");
+	private final JButton forwardItemBtn = new JButton("İleri");
+	private final JButton lastItemButton = new JButton("Son Kayıt");
+
 	private JTextField stock_code_textField = new JTextField();;
 
 	private JTextField barcode_textField = new JTextField();
 
-	private JButton save_btnNewButton = new JButton("Kaydet");
+	private JButton save_Button = new JButton("Kaydet");
 
 	private JTextField stock_name_textField = new JTextField();;
 
 	private JFormattedTextField crated_date_formattedTextField;
 
-	private JComboBox<Double> kdv_type_comboBox = new JComboBox<>();;
 	private JComboBox<Integer> stock_type_comboBox = new JComboBox<>();;;
 
-	private JComboBox<Integer> kdv_type_comboBox2 = new JComboBox<>();;;
+	private JComboBox<Integer> kdv_type_comboBox2 = new JComboBox<>();;
 	private JComboBox<String> unit_comboBox = new JComboBox();
 
 	private JTextArea description_textArea;
 	private JMenu mnNewMenu_2 = new JMenu("İlk Kayıt");
+
 	public JMenu getMnNewMenu_2() {
+
 		return mnNewMenu_2;
 	}
 
@@ -195,9 +197,9 @@ public class StockCardView extends JInternalFrame {
 	private JButton update_btnNewButton = new JButton("Güncelle");
 	private JButton delete_btnNewButton = new JButton("Sil");
 
-	public StockCardView() throws PropertyVetoException {
+	public StockCardView() {
 		setClosable(true);
-		setClosed(true);
+
 		setBounds(100, 100, 1083, 798);
 		getContentPane().setLayout(null);
 		init();
@@ -205,20 +207,16 @@ public class StockCardView extends JInternalFrame {
 	}
 
 	public void init() {
+		kdv_type_comboBox2.setEditable(true);
+
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		// jInternalFrame. setBounds(100, 100, 450, 300);
 		this.setClosable(true);
 		this.setTitle(" Stok  Kartı");
-		try {
-			this.setClosed(true);
-		} catch (PropertyVetoException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
 		// jInternalFrame().setLayout(null);
 		this.setBounds(10, 11, 994, 352);
-		;
 
 		this.getContentPane().setLayout(null);
 
@@ -293,23 +291,17 @@ public class StockCardView extends JInternalFrame {
 		unit_lbl.setBounds(441, 47, 78, 25);
 		this.getContentPane().add(unit_lbl);
 		unit_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		save_btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 
-		save_btnNewButton.setBounds(198, 223, 190, 46);
-		this.getContentPane().add(save_btnNewButton);
+		save_Button.setBounds(198, 223, 190, 46);
+		this.getContentPane().add(save_Button);
 
-		save_btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		save_Button.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 		update_btnNewButton.setBounds(397, 225, 190, 43);
 		this.getContentPane().add(update_btnNewButton);
 
 		update_btnNewButton.setForeground(Color.BLACK);
 		update_btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-
-		//
 
 		delete_btnNewButton.setBounds(597, 226, 190, 40);
 		this.getContentPane().add(delete_btnNewButton);
@@ -331,23 +323,44 @@ public class StockCardView extends JInternalFrame {
 
 		JMenuBar menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
-	
-		mnNewMenu_2.setIcon(Constant.FIRST_ARROW_ICON);
+//
+//		mnNewMenu_2.setIcon(Constant.FIRST_ARROW_ICON);
+//
+//		menuBar.add(mnNewMenu_2);
+//
+//		mnNewMenu_1.setIcon(Constant.BACK_ARROW_ICON);
+//
+//		menuBar.add(mnNewMenu_1);
+//
+//		mnNewMenu.setIcon(Constant.FORWARD_ARROW_ICON);
+//
+//		menuBar.add(mnNewMenu);
+//
+//		mnNewMenu_3.setIcon(Constant.LAST_ARROW_ICON);
+////		
+//		menuBar.add(mnNewMenu_3);
+		menuBar.setBackground(Color.WHITE);
+		this.setJMenuBar(menuBar);
+		firstItemButton.setBackground(Color.WHITE);
+		firstItemButton.setBorderPainted(false);
+		firstItemButton.setIcon(Constant.FIRST_ARROW_ICON);
 
-		menuBar.add(mnNewMenu_2);
-		
+		menuBar.add(firstItemButton);
 
-		mnNewMenu_1.setIcon(Constant.BACK_ARROW_ICON);
+		previusItemButton.setBorderPainted(false);
+		previusItemButton.setBackground(Color.WHITE);
+		previusItemButton.setIcon(Constant.BACK_ARROW_ICON);
 
-		menuBar.add(mnNewMenu_1);
+		menuBar.add(previusItemButton);
+		getForwardItemBtn().setBorderPainted(false);
+		getForwardItemBtn().setBackground(Color.WHITE);
+		getForwardItemBtn().setIcon(Constant.FORWARD_ARROW_ICON);
+		menuBar.add(getForwardItemBtn());
+		lastItemButton.setBorderPainted(false);
+		lastItemButton.setBackground(Color.WHITE);
+		getLastItemButton().setIcon(Constant.LAST_ARROW_ICON);
 
-		mnNewMenu.setIcon(Constant.FORWARD_ARROW_ICON);
-
-		menuBar.add(mnNewMenu);
-
-		mnNewMenu_3.setIcon(Constant.LAST_ARROW_ICON);
-//		
-		menuBar.add(mnNewMenu_3);
+		menuBar.add(getLastItemButton());
 
 		this.setVisible(true);
 	}

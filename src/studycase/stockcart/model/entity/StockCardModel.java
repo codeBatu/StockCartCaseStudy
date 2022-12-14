@@ -1,7 +1,44 @@
 package studycase.stockcart.model.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.envers.Audited;
+
+@Entity
+@Table(name = "stockcardtbl")
+@Audited
+
 public class StockCardModel {
+	@Id
+	@Column(name = "stock_code")
 	private String stockCod;
+
+	@Column(name = "stock_name")
+	private String stockName;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "stocktype_id")
+	private StockTypeCardModel stockTypeId;
+	@Column(name = "unit")
+	private String unit;
+	@Column(name = "barcode")
+	private String barcode;
+
+	@OneToOne
+	@JoinColumn(name = "kdvtype_id")
+	private KdvTypeCardModel kdvTypeId;
+
+	@Column(name = "description")
+	private String description;
+	@Column(name = "created_date")
+	private String cratedDate;
 
 	public String getStockCod() {
 		return stockCod;
@@ -17,14 +54,6 @@ public class StockCardModel {
 
 	public void setStockName(String stockName) {
 		this.stockName = stockName;
-	}
-
-	public int getStockType() {
-		return stockType;
-	}
-
-	public void setStockType(int stockType) {
-		this.stockType = stockType;
 	}
 
 	public String getUnit() {
@@ -43,14 +72,6 @@ public class StockCardModel {
 		this.barcode = barcode;
 	}
 
-	public Integer getKdvType() {
-		return kdvType;
-	}
-
-	public void setKdvType(Integer kdvType) {
-		this.kdvType = kdvType;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -67,12 +88,29 @@ public class StockCardModel {
 		this.cratedDate = cratedDate;
 	}
 
-	private String stockName;
-	private int stockType;
-	private String unit;
-	private String barcode;
-	private Integer kdvType;
-	private String description;
-	private String cratedDate;
+	public KdvTypeCardModel getKdvTypeId() {
+		return kdvTypeId;
+	}
+
+	/**
+	 * @param kdvTypeId the kdvTypeId to set
+	 */
+	public void setKdvTypeId(KdvTypeCardModel kdvTypeId) {
+		this.kdvTypeId = kdvTypeId;
+	}
+
+	/**
+	 * @return the stockTypeId
+	 */
+	public StockTypeCardModel getStockTypeId() {
+		return stockTypeId;
+	}
+
+	/**
+	 * @param stockTypeId the stockTypeId to set
+	 */
+	public void setStockTypeId(StockTypeCardModel stockTypeId) {
+		this.stockTypeId = stockTypeId;
+	}
 
 }

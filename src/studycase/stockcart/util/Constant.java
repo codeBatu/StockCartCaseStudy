@@ -17,6 +17,8 @@ public class Constant {
 	// OTHER DUZELT BURAYI
 	public static String GET_ALL_STOCK_CARD_TABLE_SQL_QUERY = "Select * from stock_card_tbl";
 	public static String DELETE_STOCK_CARD_TABLE_BY_STOCKCARDNO_SQL_QUERY = "delete from stock_card_tbl where StockCode=?";
+	public static String DELETE_KDV_TYPE_TABLE_BY_ID_SQL_QUERY = "delete from kdv_type_card_tbl where KdvTypeId=?";
+	public static String DELETE_STOCK_TYPE_TABLE_BY_ID_SQL_QUERY = "delete from stock_type_card_tbl where StockId=?";
 	public static String UPDATE_STOCK_CARD_TABLE_BY_STOCKCARDNO_SQL_QUERY = "update  " + " stock_card_tbl set"
 			+ " StockName=?,StockType=?," + "Unit=?,Barcode=?,KdvType=?," + "Description=?," + "CreatedDate=? "
 			+ "where StockCode=?";
@@ -43,26 +45,26 @@ public class Constant {
 //	public static String GET_STOCK_CARD_TABLE_BYSTOCKCOD = "SELECT * FROM stock_card_tbl where StockCode=?";
 	public static String GET_BACK_ITEM_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE_BYSTOCKCODE = "SELECT (max(StockCode)) `StockCode`, `StockName`, `StockType`, `Unit`, `Barcode`, `KdvType`, `Description`, `CreatedDate` ,KdvTypeId , `kdvTypeName`,`KdvTypeCode`, `KdvTypeRatio`,`StockId`,`StockTypeName`,`StockTypeCode`,`StockTypeDescription`  FROM stock_card_tbl JOIN  kdv_type_card_tbl  ON  stock_card_tbl.KdvType = kdv_type_card_tbl.KdvTypeId JOIN stock_type_card_tbl  ON stock_card_tbl.StockType = stock_type_card_tbl.StockId where StockCode<? ";
 	/// ---JOİN
-	public static String GET_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE_SQL_QUERY = "  SELECT  `StockCode`,`StockName`,`StockType`,`Unit`,`Barcode`,  `KdvType`,`Description`,`CreatedDate`,KdvTypeId,  `kdvTypeName`,`KdvTypeCode`,`KdvTypeRatio`,`StockId`,`StockTypeName`,`StockTypeCode`,`StockTypeDescription`FROM  stock_card_tbl  JOIN   kdv_type_card_tbl ON stock_card_tbl.KdvType = kdv_type_card_tbl.KdvTypeId JOIN  stock_type_card_tbl ON stock_card_tbl.StockType = stock_type_card_tbl.StockId  ;";// -----------------------------------------------------------------------------------
+	public static String GET_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE_SQL_QUERY = "SELECT  `stock_code`,`stock_name`,`stocktype_id`, `unit`,`barcode`,`kdvtype_id`,`description`,`created_date`,KdvTypeId,`kdvTypeName`,`KdvTypeCode`,`KdvTypeRatio`,`StockTypeId`,`StockTypeName`,`StockTypeCode`,`StockTypeDescription`FROM stockcardtbl LEFT  JOIN  kdvtypetbl ON stockcardtbl.kdvtype_id = kdvtypetbl.KdvTypeId LEFT JOIN stocktypetbl ON stockcardtbl.stocktype_id = stocktypetbl.StockTypeId    ";
+
+	// -----------------------------------------------------------------------------------
 
 	// Stock Card Sql Querys
 	// --------İLERİ GERİ İLK SON
-	public static String GET_FIRST_ITEM_FROM_STOCK_CARD_TABLE = "SELECT * FROM casestudydb.stock_card_tbl ORDER BY   StockCode asc   LIMIT 1  ";
-	public static String GET_LAST_ITEM_FROM_STOCK_CARD_TABLE = "SELECT * FROM casestudydb.stock_card_tbl ORDER BY  StockCode  desc   LIMIT 1  ";
-	public static String GET_NEXT_ITEM_FROM_STOCK_CARD_TABLE_BYKDVTYPENAME = "select * from casestudydb.stock_card_tbl  where StockCode = (select MIN(StockCode) from casestudydb.stock_card_tbl where StockCode > ?)";
-	public static String GET_STOCK_CARD_TABLE_BYSTOCKCOD = "SELECT * FROM stock_card_tbl where StockCode=?";
-	public static String GET_BACK_ITEM_FROM_STOCK_CARD_TABLE_BYSTOCKCODE = "select * from casestudydb.stock_card_tbl  where StockCode = (select max(StockCode) from casestudydb.stock_card_tbl where StockCode < ?)";
+	public static String GET_FIRST_ITEM_FROM_STOCK_CARD_TABLE = "SELECT * FROM stockcardtbl ORDER BY   stock_code    LIMIT 1  ";
+	public static String GET_LAST_ITEM_FROM_STOCK_CARD_TABLE = "SELECT * FROM stockcardtbl ORDER BY   stock_code  DESC  LIMIT 1  ";
+	public static String GET_NEXT_ITEM_FROM_STOCK_CARD_TABLE_BYKDVTYPENAME = "select * from stockcardtbl  where StockCode = (select MIN(StockCode) from stockcardtbl where StockCode > ?)";
+	public static String GET_STOCK_CARD_TABLE_BYSTOCKCOD = "SELECT * FROM stockcardtbl where StockCode=?";
+	public static String GET_BACK_ITEM_FROM_STOCK_CARD_TABLE_BYSTOCKCODE = "select * from stockcardtbl  where StockCode = (select max(StockCode) from stockcardtbl where StockCode < ?)";
 
 	// -----------------------------------------------------------------------------------
 
 	// Stock Type Sql Querys
 	// --------İLERİ GERİ İLK SON
-	public static String GET_LAST_ID_FROM_STOCK_TYPE_CARD_TABLE_SQL_QUERY = "	SELECT max(StockId) FROM casestudydb.stock_type_card_tbl";
-	public static String GET_LAST_ID_FROM_KDV_TYPE_CARD_TABLE_SQL_QUERY = "	SELECT max(StockId) FROM casestudydb.stock_type_card_tbl";
 
-	public static String GET_FIRST_ITEM_FROM_STOCK_TYPE_TABLE = "SELECT * FROM casestudydb.stock_type_card_tbl ORDER BY  StockId   LIMIT 1 ";
+	public static String GET_FIRST_ITEM_FROM_STOCK_TYPE_TABLE = "SELECT * FROM stocktypetbl ORDER BY StockTypeId  LIMIT 1 ";
 
-	public static String GET_LAST_ITEM_FROM_STOCK_TYPE_TABLE = "SELECT * FROM casestudydb.stock_type_card_tbl ORDER BY  StockId  desc   LIMIT 1 ";
+	public static String GET_LAST_ITEM_FROM_STOCK_TYPE_TABLE = "SELECT * FROM stocktypetbl ORDER BY StockTypeId DESC LIMIT 1 ";
 
 	public static String GET_NEXT_ITEM_FROM_STOCK_TYPE_TABLE_BYSTOCKTYPENAME = "select * from casestudydb.stock_type_card_tbl  where StockId = (select MIN(StockId) from casestudydb.stock_type_card_tbl where StockId > ?)";
 	public static String GET_STOCK_TYPE_TABLE_BYSTOCKTYPENAME = "SELECT * FROM stock_type_card_tbl where StockTypeName=?";
@@ -71,11 +73,11 @@ public class Constant {
 
 	// Kdv Type Sql Querys
 	// --------İLERİ GERİ İLK SON
-	public static String GET_FIRST_ITEM_FROM_KDV_TYPE_TABLE = "SELECT * FROM casestudydb.kdv_type_card_tbl ORDER BY  KdvTypeId   LIMIT 1 ";
-	public static String GET_LAST_ITEM_FROM_KDV_TYPE_TABLE = "SELECT * FROM casestudydb.kdv_type_card_tbl ORDER BY  KdvTypeId  desc   LIMIT 1  ";
+	public static String GET_FIRST_ITEM_FROM_KDV_TYPE_TABLE = "SELECT * FROM kdvtypetbl ORDER BY KdvTypeId  LIMIT 1 ";
+	public static String GET_LAST_ITEM_FROM_KDV_TYPE_TABLE = "SELECT * FROM kdvtypetbl ORDER BY KdvTypeId DESC LIMIT 1 ";
 	public static String GET_NEXT_ITEM_FROM_KDV_TYPE_TABLE_BYKDVTYPENAME = "select * from casestudydb.kdv_type_card_tbl  where KdvTypeId = (select MIN(KdvTypeId) from casestudydb.kdv_type_card_tbl where KdvTypeId > ?)";
 	public static String GET_KDV_TYPE_TABLE_BYKDVTYPENAME = "SELECT * FROM kdv_type_card_tbl where KdvTypeId=?";
-	public static String GET_BACK_ITEM_FROM_kdv_TYPE_TABLE_BYKDVTYPENAME = "	?)";
+	public static String GET_BACK_ITEM_FROM_kdv_TYPE_TABLE_BYKDVTYPENAME = "select * from casestudydb.kdv_type_card_tbl  where KdvTypeId = (select max(KdvTypeId) from casestudydb.kdv_type_card_tbl where KdvTypeId < ?)";
 	// ------------------------------------------------------------------------------------------------------
 	// ICON
 	public static Icon FIRST_ARROW_ICON = new ImageIcon(
