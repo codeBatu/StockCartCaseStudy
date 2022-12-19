@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JTable;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import studycase.stockcart.model.entity.KdvTypeCardModel;
@@ -66,17 +67,16 @@ public class StockCardRepository {
 
 		List<UtilEntity> stocktype = new ArrayList<>();
 
-		// Transaction transaction = null;
+		Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
-//			Query<UtilEntity> query = session.createNativeQuery(
-//					Constant.GET_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE_SQL_QUERY);
-//			stocktype = query.getResultList();
-//			
-//			stocktype.stream().map
-			Query query = session.createNativeQuery(
+			Query<UtilEntity> query = session.createNativeQuery(
 					Constant.GET_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE_SQL_QUERY);
-			List<Object[]> results = query.getResultList();
+			stocktype = query.getResultList();
+
+			Query query1 = session.createNativeQuery(
+					Constant.GET_KDV_TYPE_TABLE_WİTH_STOCK_TYPE_TABLE_WİTH_STOCK_CARD_TABLE_SQL_QUERY);
+			List<Object[]> results = query1.getResultList();
 
 			for (Object[] row : results) {
 				UtilEntity model = new UtilEntity();
@@ -114,11 +114,10 @@ public class StockCardRepository {
 	public List<KdvTypeCardModel> getKdvTypeTable() {
 		List<KdvTypeCardModel> kdvType = new ArrayList<>();
 
-		// Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
 			String sql = "SELECT * FROM kdvtypetbl";
-			Query query = session.createNativeQuery(sql);
+			Query query = session.createSQLQuery(sql);
 			List<Object[]> results = query.getResultList();
 			for (Object[] row : results) {
 				KdvTypeCardModel model = new KdvTypeCardModel();
@@ -142,7 +141,6 @@ public class StockCardRepository {
 
 		List<StockTypeCardModel> stocktype = new ArrayList<>();
 
-		// Transaction transaction = null;
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 
 			String sql = "SELECT * FROM stocktypetbl";

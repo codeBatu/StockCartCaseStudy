@@ -128,7 +128,7 @@ public class StockCardView extends JInternalFrame {
 	private JTextField barcode_textField = new JTextField();
 
 	private JButton save_Button = new JButton("Kaydet");
-
+	private JButton sendFtpButton = new JButton("Ftp Send");
 	private JTextField stock_name_textField = new JTextField();;
 
 	private JFormattedTextField crated_date_formattedTextField;
@@ -218,8 +218,6 @@ public class StockCardView extends JInternalFrame {
 		// jInternalFrame().setLayout(null);
 		this.setBounds(10, 11, 994, 352);
 
-		this.getContentPane().setLayout(null);
-
 		JLabel stock_code_lbl = new JLabel("Stok Kodu");
 		stock_code_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		stock_code_lbl.setBounds(14, 11, 102, 19);
@@ -300,6 +298,11 @@ public class StockCardView extends JInternalFrame {
 		update_btnNewButton.setBounds(397, 225, 190, 43);
 		this.getContentPane().add(update_btnNewButton);
 
+		getSendFtpButton().setBounds(774, 226, 190, 40);
+		getContentPane().add(getSendFtpButton());
+
+		this.getContentPane().setLayout(null);
+
 		update_btnNewButton.setForeground(Color.BLACK);
 		update_btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
@@ -367,6 +370,20 @@ public class StockCardView extends JInternalFrame {
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
 
+	}
+
+	/**
+	 * @return the sendFtpButton
+	 */
+	public JButton getSendFtpButton() {
+		return sendFtpButton;
+	}
+
+	/**
+	 * @param sendFtpButton the sendFtpButton to set
+	 */
+	public void setSendFtpButton(JButton sendFtpButton) {
+		this.sendFtpButton = sendFtpButton;
 	}
 
 }

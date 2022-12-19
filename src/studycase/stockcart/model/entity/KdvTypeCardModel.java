@@ -8,13 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.envers.Audited;
-
-
-
 @Entity
 @Table(name = "kdvtypetbl")
-@Audited
+
 //@AuditTable(value = "KdvType_Audited")
 public class KdvTypeCardModel {
 
@@ -38,8 +34,6 @@ public class KdvTypeCardModel {
 		this.ratio = ratio;
 	}
 
-	
-
 	public String getCode() {
 		return code;
 	}
@@ -47,8 +41,6 @@ public class KdvTypeCardModel {
 	public void setCode(String code) {
 		this.code = code;
 	}
-
-	
 
 	public String getName() {
 		return name;
@@ -75,7 +67,6 @@ public class KdvTypeCardModel {
 	/**
 	 * @return the id
 	 */
-	
 
 	@OneToOne(mappedBy = "kdvTypeId")
 	private StockCardModel stockCardModel;

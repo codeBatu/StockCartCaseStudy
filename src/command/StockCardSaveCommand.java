@@ -13,7 +13,7 @@ import studycase.stockcart.view.StockCardView;
 public class StockCardSaveCommand implements Command {
 
 	private StockCardView cardView;
-	private StockCardRepository cardRepository;
+
 	StockCardModel stockCardModel = new StockCardModel();
 
 	public StockCardSaveCommand(StockCardView stockCardView) {
@@ -38,7 +38,7 @@ public class StockCardSaveCommand implements Command {
 			transaction = session.beginTransaction();
 			stockCardModel.setStockCod(cardView.getStock_code_textField().getText());
 			stockCardModel.setStockName(cardView.getStock_name_textField().getText());
-			stockCardModel.setStockTypeId(stockTypeCardModel);
+		stockCardModel.setStockTypeId(stockTypeCardModel);
 			stockCardModel.setUnit(cardView.getUnit_comboBox().getSelectedItem().toString());
 			stockCardModel.setBarcode(cardView.getBarcode_textField().getText());
 			stockCardModel.setKdvTypeId(kdvTypeCardModel);

@@ -1,21 +1,23 @@
 package studycase.stockcart.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.envers.Audited;
-
 @Entity
 @Table(name = "stockcardtbl")
-@Audited
 
 public class StockCardModel {
+
 	@Id
 	@Column(name = "stock_code")
 	private String stockCod;
@@ -39,6 +41,8 @@ public class StockCardModel {
 	private String description;
 	@Column(name = "created_date")
 	private String cratedDate;
+	@OneToMany(mappedBy = "stockcards", cascade = CascadeType.ALL)
+	private List<StockCardFileModel> files = new ArrayList<>();
 
 	public String getStockCod() {
 		return stockCod;

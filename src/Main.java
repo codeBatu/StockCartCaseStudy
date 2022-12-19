@@ -13,20 +13,7 @@ import studycase.stockcart.util.HibernateUtil;
 public class Main {
 	public static void main(String[] args) {
 
-//		SessionFactory factory = new Configuration() 
-//				.configure("hibernate.cfg.xml")
-//				.addAnnotatedClass(StockCardModel.class)
-//				.buildSessionFactory();
-//Session session = factory.getCurrentSession();
-//try {
-//
-//	session.beginTransaction();
-//
-//	session.getTransaction().commit();
-//	
-//} finally {
-//	factory.close();
-//}
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				

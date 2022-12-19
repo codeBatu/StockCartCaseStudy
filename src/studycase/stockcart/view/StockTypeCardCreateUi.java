@@ -142,6 +142,8 @@ public class StockTypeCardCreateUi extends JInternalFrame {
 
 		delete_button.setBounds(241, 137, 119, 27);
 		getContentPane().add(delete_button);
+		
+	
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(Color.WHITE);
 		this.setJMenuBar(menuBar);

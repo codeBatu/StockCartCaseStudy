@@ -5,7 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import studycase.stockcart.model.KdvTypeCardRepository;
@@ -30,8 +33,11 @@ public class KdvTypeCardFirstItemButtonCommand implements Command {
 		KdvTypeCardModel kdvTypeCardModel = new KdvTypeCardModel();
 
 		// Transaction transaction = null;
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	
+		
+//		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//
 			String sql = "SELECT * FROM stocktypetbl";
 			Query query = session.createNativeQuery(Constant.GET_FIRST_ITEM_FROM_KDV_TYPE_TABLE);
 			List<Object[]> results = query.getResultList();
@@ -43,11 +49,11 @@ public class KdvTypeCardFirstItemButtonCommand implements Command {
 
 
 			}
-
-		} catch (Exception e) {
-			System.out.println(e);
-
-		}
+//
+//		} catch (Exception e) {
+//			System.out.println(e);
+//
+//		}
 
 	}
 

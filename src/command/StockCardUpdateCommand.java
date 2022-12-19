@@ -37,7 +37,7 @@ public class StockCardUpdateCommand implements Command {
 			transaction = session.beginTransaction();
 			stockCardModel.setStockCod(_stockCardView.getStock_code_textField().getText());
 			stockCardModel.setStockName(_stockCardView.getStock_name_textField().getText());
-			stockCardModel.setStockTypeId(stockTypeCardModel);
+		//	stockCardModel.setStockTypeId(stockTypeCardModel);
 			stockCardModel.setUnit(_stockCardView.getUnit_comboBox().getSelectedItem().toString());
 			stockCardModel.setBarcode(_stockCardView.getBarcode_textField().getText());
 			stockCardModel.setKdvTypeId(kdvTypeCardModel);

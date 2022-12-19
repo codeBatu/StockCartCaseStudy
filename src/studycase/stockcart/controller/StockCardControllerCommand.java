@@ -26,6 +26,7 @@ import command.StockCardForwardItemButtonCommand;
 import command.StockCardLastItemButtonCommand;
 import command.StockCardPreviusItemButtonCommand;
 import command.StockCardSaveCommand;
+import command.StockCardSendFtpButtonCommand;
 import command.StockCardUpdateCommand;
 import studycase.stockcart.model.StockCardRepository;
 import studycase.stockcart.model.DbUtils;
@@ -74,6 +75,7 @@ public class StockCardControllerCommand {
 				.addActionListener(new GeneralAction(new StockCardForwardItemButtonCommand(cardView)));
 		cardView.getPreviusItemButton()
 				.addActionListener(new GeneralAction(new StockCardPreviusItemButtonCommand(cardView)));
+		cardView.getSendFtpButton().addActionListener(new GeneralAction(new StockCardSendFtpButtonCommand(cardView)));
 	}
 
 	private void getStockTypeByKdvTypeId() {

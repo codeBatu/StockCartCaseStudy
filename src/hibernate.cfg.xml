@@ -1,27 +1,45 @@
-<!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-<session-factory>
-<!--  JDBC Database connection settings  -->
-<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-<property name="connection.url">jdbc:mysql://127.0.0.1:3306/casestudyhibernate?characterEncoding=utf8</property>
-<property name="connection.username">root</property>
-<property name="connection.password">root123</property>
-<property name="hbm2ddl.auto">update</property>
-<!--  Veritabanına bağlantı yapıldığında var olan veritabanı üzerine mi devam edilsin, yoksa uygulama her çalıştığında baştan mı veritabanı oluşturması için ayar. 
-        Yalnızca üzerine devam etmesi için “update”, baştan oluşturması için “create” belirlememiz gerekiyor.  -->
-<property name="connection.pool_size">1</property>
-<!--  Select our SQL dialect  -->
-<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
-<!--  Audit Etkinleştirmek İçin <property name="hibernate.listeners.envers.autoRegister">true</property>  -->
-<!--  Hibernate Audit ayarları  -->
 
-<!--  Echo the SQL to stdout  -->
-<property name="show_sql">true</property>
-<!--  Set the current session context  -->
-<property name="current_session_context_class">thread</property>
-</session-factory>
+	<session-factory>
+
+		<!-- Database connection settings -->
+
+		<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+
+		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/denemedb?characterEncoding=utf8</property>
+
+		<property name="connection.username">root</property>
+
+		<property name="connection.password">root123</property>
+
+		<!-- JDBC connection pool (use the built-in) -->
+
+		<property name="connection.pool_size">3</property>
+
+		<property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+		<!-- Enable Hibernate's automatic session context management -->
+
+		<property name="current_session_context_class">thread</property>
+
+		<!-- Disable the second-level cache  -->
+
+		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property> 
+
+		<!-- Echo all executed SQL to stdout -->
+
+		<property name="show_sql">true</property>
+
+		<!-- Drop and re-create the database schema on startup-->
+
+		<property name="hbm2ddl.auto">update</property>
+		<!--	<property name="hibernate.listeners.envers.autoRegister">true</property> -->
+	<!--		<property name="hibernate.listeners.envers.type_resolution_provider">org.hibernate.envers.event.EnversTypeResolver</property> -->
+	<!--		<property name="hibernate.listeners.envers.session_factory_observer">org.hibernate.envers.event.AuditEventListener</property> -->
+
+
+	</session-factory>
+
 </hibernate-configuration>
-

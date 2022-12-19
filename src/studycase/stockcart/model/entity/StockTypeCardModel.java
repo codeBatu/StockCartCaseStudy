@@ -10,13 +10,11 @@ import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 
-
-
 @Entity
 @Table(name = "stocktypetbl")
-@Audited
+
 //@AuditTable(value = "StockType_Audited")
-public class StockTypeCardModel  {
+public class StockTypeCardModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,8 +53,6 @@ public class StockTypeCardModel  {
 		this.description = description;
 	}
 
-	
-
 	/**
 	 * @return the id
 	 */
@@ -71,7 +67,7 @@ public class StockTypeCardModel  {
 		this.id = id;
 	}
 
-	@OneToOne(mappedBy = "stockTypeId")
-	private StockCardModel stockCardModel;
+//	@OneToOne(mappedBy = "stockTypeId")
+//	private StockCardModel stockCardModel;
 
 }

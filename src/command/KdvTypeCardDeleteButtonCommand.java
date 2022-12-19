@@ -1,7 +1,9 @@
 package command;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 import studycase.stockcart.model.KdvTypeCardRepository;
 import studycase.stockcart.model.entity.KdvTypeCardModel;
@@ -20,27 +22,38 @@ public class KdvTypeCardDeleteButtonCommand implements Command {
 
 	@Override
 	public void execute() {
-		Transaction transaction = null;
+		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+		Session session;
+		session = sessionFactory.openSession();
+		session.beginTransaction();
+		KdvTypeCardModel kdvTypeCardModel = new KdvTypeCardModel();
 
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		kdvTypeCardModel.setId(1);
+		session.delete(kdvTypeCardModel);
+		session.getTransaction().commit();
+		session.close();
 
-			transaction = session.beginTransaction();
+//		Transaction transaction = null;
+//
+//		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//
+//			transaction = session.beginTransaction();
+//
+//			KdvTypeCardModel kdvTypeCardModel = new KdvTypeCardModel();
+//
+//			kdvTypeCardModel.setId(Integer.parseInt(kdvTypeCardCreateUi.getLblNewLabel().getText()));
+//			session.delete(kdvTypeCardModel);
+//
+//			transaction.commit();
 
-			KdvTypeCardModel kdvTypeCardModel = new KdvTypeCardModel();
-
-			kdvTypeCardModel.setId(Integer.parseInt(kdvTypeCardCreateUi.getLblNewLabel().getText()));
-			session.delete(kdvTypeCardModel);
-
-			transaction.commit();
-
-		} catch (Exception e) {
-			if (transaction != null) {
-				// transaction.rollback();
-				System.out.println("burda");
-			}
-			e.printStackTrace();
-
-		}
+//		} catch (Exception e) {
+//			if (transaction != null) {
+//				// transaction.rollback();
+//				System.out.println("burda");
+//			}
+//			e.printStackTrace();
+//
+//		}
 
 		// this.cardRepository.deleteDb(Integer.parseInt(kdvTypeCardCreateUi.getLblNewLabel().getText()));
 

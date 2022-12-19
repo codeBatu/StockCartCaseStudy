@@ -24,24 +24,20 @@ public class StockTypeCardSaveButtonCommand implements Command {
 
 		StockTypeCardModel stockTypeCardModel = new StockTypeCardModel();
 		Transaction transaction = null;
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			// start a transaction
-			transaction = session.beginTransaction();
-		
-			stockTypeCardModel.setName( this.stockTypeCardView.getStock_type_name_textField().getText());
-			stockTypeCardModel.setCode( this.stockTypeCardView.getStock_type_code_textField().getText());
-			stockTypeCardModel.setDescription( this.stockTypeCardView.getStock_type_description_textArea().getText());
-		
 
-			session.save(stockTypeCardModel);
-			transaction.commit();
-		} catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-			e.printStackTrace();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		// start a transaction
+		transaction = session.beginTransaction();
 
-		}
+		stockTypeCardModel.setName(this.stockTypeCardView.getStock_type_name_textField().getText());
+		stockTypeCardModel.setCode(this.stockTypeCardView.getStock_type_code_textField().getText());
+		stockTypeCardModel.setDescription(this.stockTypeCardView.getStock_type_description_textArea().getText());
+
+		session.save(stockTypeCardModel);
+		transaction.commit();
+		session.close();
+
+	}
 //		if (stockTypeCardModel.getCode().equals("") || stockTypeCardModel.getName().equals("")
 //				|| stockTypeCardModel.getDescription().equals("")) {
 //			JOptionPane.showMessageDialog(null, "Field is not null");
@@ -55,8 +51,6 @@ public class StockTypeCardSaveButtonCommand implements Command {
 //
 //			this.stockTypeRepository.Create(stockTypeCardModel);
 
-		// }
-
-	}
+	// }
 
 }
